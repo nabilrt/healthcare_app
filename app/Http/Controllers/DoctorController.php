@@ -128,6 +128,7 @@ class DoctorController extends Controller
         $doctor->doctor_degree=$req->degree->hashName();
         $doctor->doctor_type=$req->doc_type;
         $doctor->doctor_specialty=$req->specialty;
+        $doctor->status="Valid";
         $doctor->save();
 
 
