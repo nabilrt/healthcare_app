@@ -51,7 +51,7 @@ Route::post('/reset',[PageController::class,'matchOTP'])->name('matchOTP')->midd
 Route::post('/rs',[PageController::class,'changePass'])->name('changePass')->middleware('AccessRequest');
 Route::get('/conf',[PageController::class,'change_confirm'])->name('change_confirm')->middleware('AccessRequest');
 Route::get('/unblock_req',[PageController::class,'unblockForm'])->name('unblock_re');
-Route::post('/unblock_req',[PageController::class,'unblockRequest'])->name('send_m')->middleware('AccessRequest');
+Route::post('/unblock_req',[PageController::class,'unblockRequest'])->name('send_m');
 Route::get('/about_us',[PageController::class,'aboutUs'])->name('about_Us');
 
 

@@ -107,25 +107,28 @@ class PageController extends Controller
 
                 $seller = Seller::where('seller_id',$req->username)->where('seller_pass',$password)->first();
 
-                if($seller){
+                if($seller) {
 
-                    $req->session()->put('username',$username);
 
-                    if($req->remember){
-                        setcookie('uname',$req->username, time()+20);
-                        setcookie('pass',$req->pass, time()+20);
+
+                        $req->session()->put('username', $username);
+
+                        if ($req->remember) {
+                            setcookie('uname', $req->username, time() + 20);
+                            setcookie('pass', $req->pass, time() + 20);
+                            return redirect()->route('s_dashboard');
+                        }
+
                         return redirect()->route('s_dashboard');
-                    }
 
-                    return redirect()->route('s_dashboard');
 
                 }else{
-
-                    $sellerCount++;
 
                     return back()->withErrors(['Invalid Login Credentials!! Please Try Again', 'Cart is Empty!!']);
 
                 }
+
+
 
             }else if($rec[1]=="AD"){
 
@@ -157,22 +160,30 @@ class PageController extends Controller
 
                 if($patient){
 
-                    $req->session()->put('username',$username);
+                    if($patient->status=="Valid"){
 
-                    if($req->remember){
-                        setcookie('uname',$req->username, time()+20);
-                        setcookie('pass',$req->pass, time()+20);
+                        $req->session()->put('username',$username);
+
+                        if($req->remember){
+                            setcookie('uname',$req->username, time()+20);
+                            setcookie('pass',$req->pass, time()+20);
+                            return redirect()->route('p_dashboard');
+                        }
+
                         return redirect()->route('p_dashboard');
+
+                    }else{
+
+
+                        return back()->withErrors(['You are blocked! Please Contact Support!', 'Cart is Empty!!']);
+
+                    }
+                    } else{
+
+                        return back()->withErrors(['Invalid Login Credentials!! Please Try Again', 'Cart is Empty!!']);
                     }
 
-                    return redirect()->route('p_dashboard');
 
-                }else{
-
-
-                    return back()->withErrors(['Invalid Login Credentials!! Please Try Again', 'Cart is Empty!!']);
-
-                }
 
 
             }

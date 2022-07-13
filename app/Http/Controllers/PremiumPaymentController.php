@@ -59,7 +59,7 @@ class PremiumPaymentController extends Controller
 
 
 
-        return redirect()->route('membership');
+        return redirect()->route('member');
 
     }
 
