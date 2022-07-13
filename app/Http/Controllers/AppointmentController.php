@@ -251,6 +251,14 @@ class AppointmentController extends Controller
 
     }
 
+    public function checkSchedule(Request $req){
+
+        $apps=Appointment::where('doctor_id',$req->id)->get();
+        $patient=Patient::where('patient_id',session('username'))->first();
+
+        return view('Patient.check_schedule')->with('patient',$patient)->with('apps',$apps);
+    }
+
     public function generateID_C(){
         $com=Comission::orderBy('commission_id','desc')->first();
 

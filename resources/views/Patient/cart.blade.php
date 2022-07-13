@@ -47,7 +47,7 @@
                         <div style="padding-left: 20px">
 
                             <input type="submit" value="Checkout" class="btn btn-outline-dark btn-sm ">
-                            <a href="/eC-{{ session('username') }}" class="btn btn-outline-primary btn-sm"><i class='bx bxs-cart-download' ></i></a> <br>
+                            <a href="/patient/cart/{{ session('username') }}" class="btn btn-outline-primary btn-sm"><i class='bx bxs-cart-download' ></i></a> <br>
 
                         </div>
 

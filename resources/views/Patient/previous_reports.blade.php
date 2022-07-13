@@ -22,7 +22,7 @@
                                 <td>{{ $rep->report_id }}</td>
                                 <td>{{ $rep->against }}</td>
                                 <td>{{ $rep->reason }}</td>
-                                <td><a href="/rpD-{{ $rep->report_id }}" class="btn btn-sm btn-danger"><i class='bx bx-block'></i></a></td>
+                                <td><a href="/patient/report/delete/{{ $rep->report_id }}" class="btn btn-sm btn-danger"><i class='bx bx-block'></i></a></td>
                             </tr>
                         @endforeach
                         </tbody>

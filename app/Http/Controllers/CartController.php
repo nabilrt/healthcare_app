@@ -214,6 +214,7 @@ class CartController extends Controller
     }
 
     public function generateID_C(){
+
         $com=Comission::orderBy('commission_id','desc')->first();
 
         if(empty($com)){
@@ -224,7 +225,7 @@ class CartController extends Controller
 
             $rec=explode('-',$com->commission_id);
             $new_id=(int)$rec[1];
-            $updated_id=$new_id+1;
+            $updated_id=$new_id+2;
 
             return "CM-".str($updated_id);
 

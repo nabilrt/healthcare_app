@@ -34,7 +34,7 @@
                                 <td>{{ $o->total_price. '$' }}</td>
                                 <td>{{ $o->order_date }}</td>
                                 @if($o->status=="Ordered")
-                                <td><a href="/cO-{{$o->order_id}}" class="btn-outline-danger btn-sm"><i class='bx bx-folder-minus' ></i></a></td>
+                                <td><a href="/patient/orders/{{$o->order_id}}" class="btn-outline-danger btn-sm"><i class='bx bx-folder-minus' ></i></a></td>
                                 @else
                                 <td></td>
                                 @endif

@@ -15,6 +15,7 @@
                             <th>Speciality</th>
                             <th>Remuneration</th>
                             <th>Appointment</th>
+                            <th>Schedule</th>
                         </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
@@ -28,7 +29,8 @@
                                 @endif
                                     <td>{{ $det->doctor_specialty }}</td>
                                 <td><s>{{ $det->visit.'$' }}</s> {{ (int)$det->visit - (((int)$det->visit*(int)$det->discount_per)/100) .'$' }}</td>
-                                <td><a href="/tA-{{ $det->doctor_id }}" class="btn btn-sm btn-primary"><i class='bx bx-task'></i></a></td>
+                                <td><a href="/patient/take_appointment/{{ $det->doctor_id }}" class="btn btn-sm btn-primary"><i class='bx bx-task'></i></a></td>
+                                <td><a href="/doctors/schedule/{{$det->doctor_id}}" class="btn btn-sm btn-dark"><i class='bx bx-time-five'></i></a></td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -29,7 +29,7 @@
                                 <td>{{ $m->medicine_type }}</td>
                                 <td>{{ $m->quantity }}</td>
                                 <td>{{ $m->medicine_price.'$' }}</td>
-                                <td><a href="/aCart-{{ $m->medicine_id }}" class="btn btn-sm btn-outline-dark"><i class='bx bx-cart'></i></a></td>
+                                <td><a href="/patient/add_to_cart/{{ $m->medicine_id }}" class="btn btn-sm btn-outline-dark"><i class='bx bx-cart'></i></a></td>
                             </tr>
                         @endforeach
                         </tbody>

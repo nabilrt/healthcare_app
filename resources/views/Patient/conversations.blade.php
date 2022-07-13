@@ -21,7 +21,7 @@
                                 <td>{{ $conv->message }}</td>
                                 <td>{{ $conv->reply }}</td>
                                 @if($conv->reply=="")
-                                    <td ><a href="/dC-{{ $conv->conv_id }}" class="btn btn-sm btn-success">Reply</a></td>
+                                    <td ><a href="/patient/reply/{{ $conv->conv_id }}" class="btn btn-sm btn-success">Reply</a></td>
                                 @else
                                     <td ></td>
                                 @endif
@@ -32,7 +32,7 @@
                     {{ $conversations->links() }}
                     <br>
                     &nbsp;&nbsp; <a href="{{ route('p_inbox') }}" class="btn btn-sm btn-primary"><i class='bx bxs-inbox' ></i></a> &nbsp;
-                    <a href="/dN-{{ $i_id }}" class="btn btn-sm btn-success"><i class='bx bx-message-add'></i></a> &nbsp;
+                    <a href="/patient/new_message/{{ $i_id }}" class="btn btn-sm btn-success"><i class='bx bx-message-add'></i></a> &nbsp;
                 </div>
                 <br>
 
