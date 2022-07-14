@@ -5,7 +5,7 @@
 
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card">
-                <h5 class="card-header">Conversation with {{ $name }}</h5>
+                <h5 class="card-header">Conversation with Dr.{{ $name }}</h5>
                 <div class="table-responsive text-nowrap">
                     <table class="table">
                         <thead class="table-dark">

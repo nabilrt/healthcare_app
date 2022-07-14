@@ -13,21 +13,26 @@
             <br>
 
 
-            <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Problems</h5>
+            <div style="padding-left: 20px">
 
-            @foreach($issues as $issue)
-            <li class="card-header">{{ $issue->problems }}</li>
-            @endforeach
+                <h5>Problems</h5>
 
-            <br>
+                @foreach($issues as $issue)
+                    <li>{{ $issue->problems }}</li>
+                @endforeach
+
+                <br>
 
 
 
 
+                <a href="{{ route('history') }}" class="btn btn-sm btn-primary">Go Back</a> <br> <br>
+
+            </div>
 
 
         </div>
-        <a href="{{ route('history') }}" class="btn btn-sm btn-primary">Go Back</a> <br> <br>
+
     </div>
 
 </div>

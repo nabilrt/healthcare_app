@@ -5,7 +5,7 @@
 
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card">
-                <h5 class="card-header">Schedule of </h5>
+                <h5 class="card-header">Schedule of Dr.{{ $doctor_name }}</h5>
                 <div style="padding-left: 20px">
                     <p>Please check the time to avoid time clash</p> <br>
                 </div>
