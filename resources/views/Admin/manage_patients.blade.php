@@ -26,7 +26,7 @@
                                 <td>{{ $pat->patient_gender }}</td>
                                 <td>{{ $pat->membership_type }}</td>
                                 <td><span class="badge bg-label-success me-1">{{$pat->status}}</span></td>
-                                <td><a href="/pB-{{ $pat->patient_id }}" class="btn btn-sm btn-danger"><i class='bx bx-block' ></i></a></td>
+                                <td><a href="/admin/block/patient/{{ $pat->patient_id }}" class="btn btn-sm btn-danger"><i class='bx bx-block' ></i></a></td>
                             </tr>
                         @endforeach
                         </tbody>

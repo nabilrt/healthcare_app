@@ -23,8 +23,8 @@
                                 <td>{{ $exp->purpose }}</td>
                                 <td>{{ $exp->amount .'$' }}</td>
                                 <td>{{ $exp->created }}</td>
-                                <td><a href="/eE-{{ $exp->expense_id }}" class="btn btn-sm btn-warning"><i class='bx bx-edit-alt' ></i></a></td>
-                                <td><a href="/eD-{{ $exp->expense_id }}" class="btn btn-sm btn-danger"><i class='bx bx-block' ></i></a></td>
+                                <td><a href="/admin/expense/edit/{{ $exp->expense_id }}" class="btn btn-sm btn-warning"><i class='bx bx-edit-alt' ></i></a></td>
+                                <td><a href="/admin/expense/delete/{{ $exp->expense_id }}" class="btn btn-sm btn-danger"><i class='bx bx-block' ></i></a></td>
                             </tr>
                         @endforeach
                         </tbody>

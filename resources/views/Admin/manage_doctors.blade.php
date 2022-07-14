@@ -26,7 +26,7 @@
                                 <td>{{ $pat->doctor_type }}</td>
                                 <td>{{ $pat->doctor_specialty }}</td>
                                 <td><span class="badge bg-label-success me-1">{{$pat->status}}</span></td>
-                                <td><a href="/dB-{{ $pat->doctor_id }}" class="btn btn-sm btn-danger"><i class='bx bx-block' ></i></a></td>
+                                <td><a href="/admin/block/doctor/{{ $pat->doctor_id }}" class="btn btn-sm btn-danger"><i class='bx bx-block' ></i></a></td>
                             </tr>
                         @endforeach
                         </tbody>
