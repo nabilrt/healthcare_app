@@ -20,7 +20,7 @@
                     @foreach ($medhist as $med)
                   <tr>
                     <td>{{ $med->his_id }}</td>
-                    <td><a href="/pH-{{ $med->his_id }}" class="btn btn-sm btn-info">Check Issues</a></td>
+                    <td><a href="/doctor/patient/issues/{{ $med->his_id }}" class="btn btn-sm btn-info">Check Issues</a></td>
                     <td>{{ $med->patient_id }}</td>
                     <td>{{ $med->appointment_id }}</td>
                   </tr>

@@ -22,7 +22,7 @@
             <div class="card-body">
               <div class="d-flex align-items-start align-items-sm-center gap-4">
                 <img
-                  src={{ 'storage/dp/'.$doctor->doctor_dp }}
+                  src={{ asset('storage/dp/'.$doctor->doctor_dp) }}
                   alt="user-avatar"
                   class="d-block rounded"
                   height="100"

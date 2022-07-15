@@ -22,7 +22,7 @@
                     <td>{{ $inbox->inbox_id }}</td>
                     <td>{{ $inbox->patient_id }}</td>
                     <td>{{ $inbox->appointment_id }}</td>
-                    <td><a href="/p-{{ $inbox->inbox_id }}" class="btn btn-sm btn-primary"><i class='bx bx-message-rounded-dots' ></i></a></td>
+                    <td><a href="/doctor/inbox/{{ $inbox->inbox_id }}" class="btn btn-sm btn-primary"><i class='bx bx-message-rounded-dots' ></i></a></td>
                   </tr>
                   @endforeach
                 </tbody>

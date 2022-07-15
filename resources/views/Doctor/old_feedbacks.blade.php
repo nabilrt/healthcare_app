@@ -20,7 +20,7 @@
                   <tr>
                     <td>{{ $rev->r_id }}</td>
                     <td>{{ $rev->comment }}</td>
-                    <td><a href="/pD-{{ $rev->r_id }}" class="btn btn-sm btn-danger">Delete Feedback</a></td>
+                    <td><a href="/doctor/review/delete/{{ $rev->r_id }}" class="btn btn-sm btn-danger">Delete Feedback</a></td>
                   </tr>
                   @endforeach
                 </tbody>

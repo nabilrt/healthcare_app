@@ -30,8 +30,8 @@
                     <td>{{ $m->medicine_type }}</td>
                     <td>{{ $m->quantity }}</td>
                     <td>{{ $m->medicine_price }}</td>
-                    <td><a href="/mC-{{ $m->medicine_id }}" class="btn btn-sm btn-warning"><i class='bx bxs-edit-alt' ></i></a></td>
-                    <td><a href="/aR-{{ $m->medicine_id }}" class="btn btn-sm btn-danger"><i class='bx bx-block' ></i></a></td>
+                    <td><a href="/seller/med/show/{{ $m->medicine_id }}" class="btn btn-sm btn-warning"><i class='bx bxs-edit-alt' ></i></a></td>
+                    <td><a href="/seller/med/delete/{{ $m->medicine_id }}" class="btn btn-sm btn-danger"><i class='bx bx-block' ></i></a></td>
                   </tr>
                   @endforeach
                 </tbody>

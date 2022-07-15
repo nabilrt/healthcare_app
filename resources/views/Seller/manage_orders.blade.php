@@ -30,7 +30,7 @@
                     <td>{{ $o->status }}</td>
                     <td>{{ $o->order_date }}</td>
                       @if($o->status!="Cancelled")
-                    <td><a href="/oC-{{ $o->order_id }}" class="btn btn-sm btn-dark"><i class='bx bx-up-arrow-circle'></i></a></td>
+                    <td><a href="/seller/order/show/{{ $o->order_id }}" class="btn btn-sm btn-dark"><i class='bx bx-up-arrow-circle'></i></a></td>
                       @else
                       <td></td>
                       @endif
