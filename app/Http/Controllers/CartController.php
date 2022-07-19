@@ -162,7 +162,7 @@ class CartController extends Controller
             }
 
             $com=new Comission();
-            $com->commission_id=$this->generateID_C();
+            $com->commission_id="CM-".rand(20,1000);
             $com->amount=((int)$tot-(((int)$tot*95)/100));
             $com->purpose="Medicine Vat";
             $com->save();

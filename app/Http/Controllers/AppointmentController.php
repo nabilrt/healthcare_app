@@ -181,7 +181,7 @@ class AppointmentController extends Controller
                 $appointment->save();
 
                 $com=new Comission();
-                $com->commission_id=$c_id;
+                $com->commission_id="CM-".rand(20,1000);
                 $com->amount=str((int)$req->rm_b - (((int)$req->rm_b*95)/100));
                 $com->purpose="Appointment Charge";
                 $com->save();
@@ -273,7 +273,7 @@ class AppointmentController extends Controller
 
             $rec=explode('-',$com->commission_id);
             $new_id=(int)$rec[1];
-            $updated_id=$new_id+1;
+            $updated_id=$new_id+2;
 
             return "CM-".str($updated_id);
 

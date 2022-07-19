@@ -86,7 +86,7 @@ class ConversationController extends Controller
         $conversation->reply=$req->reply;
         $conversation->save();
 
-        return redirect('/p-'.$req->i_id);
+        return redirect('/doctor/inbox/'.$req->i_id);
 
      }
 
@@ -101,7 +101,7 @@ class ConversationController extends Controller
          $conversation->reply=$req->reply;
          $conversation->save();
 
-         return redirect('/d-'.$req->i_id);
+         return redirect('/patient/inbox/'.$req->i_id);
      }
 
      public function generateID(){
@@ -140,7 +140,7 @@ class ConversationController extends Controller
         $conversation->reply="";
         $conversation->save();
 
-        return redirect('/p-'.$req->i_id);
+        return redirect('/doctor/inbox/'.$req->i_id);
 
     }
 
@@ -156,7 +156,7 @@ class ConversationController extends Controller
         $conversation->reply="";
         $conversation->save();
 
-        return redirect('/d-'.$req->i_id);
+        return redirect('/patient/inbox/'.$req->i_id);
 
     }
 
