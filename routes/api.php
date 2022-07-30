@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login',[AuthenticationAPI::class,'login']);
 Route::get('/logout',[AuthenticationAPI::class,'logout']);
+Route::get('/userExist',[AuthenticationAPI::class,'userExistence']);

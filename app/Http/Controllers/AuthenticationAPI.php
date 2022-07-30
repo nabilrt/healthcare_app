@@ -98,4 +98,21 @@ class AuthenticationAPI extends Controller
         return "Success";
 
     }
+
+    public function userExistence(){
+
+        $activeUser=Token::where('expired_at',NULL)->first();
+        if($activeUser && $activeUser->token_for=="Doctor"){
+            return "Doctor";
+        }else if($activeUser && $activeUser->token_for=="Patient"){
+            return "Patient";
+        }
+        else if($activeUser && $activeUser->token_for=="Seller"){
+            return "Seller";
+        }
+        else if($activeUser && $activeUser->token_for=="Admin"){
+            return "Admin";
+        }
+        return "No";
+    }
 }

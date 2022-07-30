@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2022 at 10:55 AM
+-- Generation Time: Jul 30, 2022 at 03:12 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -63,7 +63,13 @@ CREATE TABLE `appointments` (
 INSERT INTO `appointments` (`appointment_id`, `doctor_id`, `patient_id`, `app_date`, `app_time`) VALUES
 ('A-1', 'ASHCS-D-2', 'ASHCS-P-1', '2022-07-09', '15:30:00'),
 ('A-2', 'ASHCS-D-2', 'ASHCS-P-2', '2022-07-11', '17:00:00'),
-('A-3', 'ASHCS-D-1', 'ASHCS-P-3', '2022-07-14', '15:30:00');
+('A-3', 'ASHCS-D-1', 'ASHCS-P-3', '2022-07-14', '15:30:00'),
+('A-4', 'ASHCS-D-3', 'ASHCS-P-3', '2022-07-14', '15:33:00'),
+('A-5', 'ASHCS-D-2', 'ASHCS-P-3', '2022-07-14', '15:30:00'),
+('A-6', 'ASHCS-D-2', 'ASHCS-P-5', '2022-07-14', '15:35:00'),
+('A-7', 'ASHCS-D-1', 'ASHCS-P-6', '2022-07-19', '21:35:00'),
+('A-8', 'ASHCS-D-2', 'ASHCS-P-6', '2022-07-19', '21:45:00'),
+('A-9', 'ASHCS-D-2', 'ASHCS-P-6', '2022-07-19', '21:50:00');
 
 -- --------------------------------------------------------
 
@@ -79,6 +85,14 @@ CREATE TABLE `carts` (
   `total_price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`medicine_id`, `item_name`, `item_quantity`, `unit_price`, `total_price`, `user_id`) VALUES
+('M-1', 'Napa', '5', '20', '100', 'ASHCS-P-3'),
+('M-2', 'Hexisol', '3', '75', '225', 'ASHCS-P-3');
 
 -- --------------------------------------------------------
 
@@ -98,11 +112,16 @@ CREATE TABLE `comissions` (
 
 INSERT INTO `comissions` (`commission_id`, `amount`, `purpose`) VALUES
 ('CM-1', '1', 'Appointment Charge'),
+('CM-11', '0.6', 'Appointment Charge'),
 ('CM-2', '2', 'Appointment Charge'),
 ('CM-3', '3', 'Medicine Vat'),
+('CM-397', '16.25', 'Medicine Vat'),
 ('CM-4', '1.05', 'Appointment Charge'),
 ('CM-5', '4', 'Medicine Vat'),
-('CM-6', '2', 'Medicine Vat');
+('CM-6', '2', 'Medicine Vat'),
+('CM-7', '0.85', 'Appointment Charge'),
+('CM-8', '0.6', 'Appointment Charge'),
+('CM-9', '0.6', 'Appointment Charge');
 
 -- --------------------------------------------------------
 
@@ -128,7 +147,11 @@ INSERT INTO `conversations` (`conv_id`, `inbox_id`, `doctor_id`, `patient_id`, `
 ('C-2', 'I-1', 'ASHCS-D-2', 'ASHCS-P-1', 'Hi', 'Hello'),
 ('C-3', 'I-1', 'ASHCS-D-2', 'ASHCS-P-1', 'Yes', 'No'),
 ('C-4', 'I-1', 'ASHCS-D-2', 'ASHCS-P-1', 'Hi Doctor', 'Help Me'),
-('C-5', 'I-2', 'ASHCS-D-1', 'ASHCS-P-3', 'Hello Doctor! I need help.', 'What Happend!');
+('C-5', 'I-2', 'ASHCS-D-1', 'ASHCS-P-3', 'Hello Doctor! I need help.', 'What Happend!'),
+('C-6', 'I-5', 'ASHCS-D-2', 'ASHCS-P-5', 'Hello Doctor! I need help.', ''),
+('C-7', 'I-6', 'ASHCS-D-2', 'ASHCS-P-6', 'Hello Doctor! I need help.', ''),
+('C-8', 'I-6', 'ASHCS-D-2', 'ASHCS-P-6', 'Hello Doctor! I need help.', ''),
+('C-9', 'I-6', 'ASHCS-D-2', 'ASHCS-P-6', 'Hello Doctor! I need help.', '');
 
 -- --------------------------------------------------------
 
@@ -156,7 +179,7 @@ CREATE TABLE `doctors` (
 INSERT INTO `doctors` (`doctor_id`, `doctor_name`, `doctor_email`, `doctor_pass`, `doctor_gender`, `doctor_degree`, `doctor_dp`, `doctor_type`, `doctor_specialty`, `status`) VALUES
 ('ASHCS-D-1', 'Abidur Rahman Nabil', 'nabilrt51@gmail.com', 'nab123', 'Male', 'V56jXy90TeUShG81QEtrfHhUsaCgm1LxMTeESElG.pdf', 'GJZqY8fy8oT3myS7VT7FDAZ0xEjpn7jE7xyCcKAR.jpg', 'Specialist', 'Surgeon', 'Valid'),
 ('ASHCS-D-2', 'Arpita Datta', 'arpitadatta081@gmail.com', 'arpita123', 'Female', '6PFQCenSExnn5OUlihZWy5Z1aCK75QdcCSZXCtgd.pdf', '9IcwW8VM5IzjPiqAKHLDrQnSlAjTU5QYv8klNrrw.jpg', 'Specialist', 'Gynochologist', 'Valid'),
-('ASHCS-D-3', 'Sazin Israk Prioty', '19-41635-3@student.aiub.edu', 'sazin12', 'Female', 'LY5eDz2L8Hx880vwzrQMP17nadYF6hmD34FTCgvF.pdf', 'fxynrT2CfC7WE3xsiMEA8GTRlB5kPrXuc5ZZZmjW.jpg', 'Normal', 'Medicine', 'Valid');
+('ASHCS-D-3', 'Sazin Israk Prioty', '19-41635-3@student.aiub.edu', 'sazin12', 'Female', 'LY5eDz2L8Hx880vwzrQMP17nadYF6hmD34FTCgvF.pdf', 'fxynrT2CfC7WE3xsiMEA8GTRlB5kPrXuc5ZZZmjW.jpg', 'Normal', 'Medicine', 'Blocked');
 
 -- --------------------------------------------------------
 
@@ -213,7 +236,11 @@ CREATE TABLE `inboxes` (
 
 INSERT INTO `inboxes` (`inbox_id`, `appointment_id`, `doctor_id`, `patient_id`) VALUES
 ('I-1', 'A-1', 'ASHCS-D-2', 'ASHCS-P-1'),
-('I-2', 'A-3', 'ASHCS-D-1', 'ASHCS-P-3');
+('I-2', 'A-3', 'ASHCS-D-1', 'ASHCS-P-3'),
+('I-3', 'A-4', 'ASHCS-D-3', 'ASHCS-P-3'),
+('I-4', 'A-5', 'ASHCS-D-2', 'ASHCS-P-3'),
+('I-5', 'A-6', 'ASHCS-D-2', 'ASHCS-P-5'),
+('I-6', 'A-9', 'ASHCS-D-2', 'ASHCS-P-6');
 
 -- --------------------------------------------------------
 
@@ -239,7 +266,15 @@ INSERT INTO `issues` (`his_id`, `problems`) VALUES
 ('H-3', 'Gastric'),
 ('H-3', 'Sour Throat'),
 ('H-3', 'Allergy'),
-('H-3', 'Fever');
+('H-3', 'Fever'),
+('H-4', 'Gastric'),
+('H-4', 'Sour Throat'),
+('H-5', 'Gastric'),
+('H-5', 'Sour Throat'),
+('H-6', 'Gastric'),
+('H-6', 'Sour Throat'),
+('H-7', 'Gastric'),
+('H-7', 'Sour Throat');
 
 -- --------------------------------------------------------
 
@@ -261,7 +296,11 @@ CREATE TABLE `medical_histories` (
 INSERT INTO `medical_histories` (`his_id`, `doctor_id`, `appointment_id`, `patient_id`) VALUES
 ('H-1', 'ASHCS-D-2', 'A-1', 'ASHCS-P-1'),
 ('H-2', 'ASHCS-D-2', 'A-2', 'ASHCS-P-2'),
-('H-3', 'ASHCS-D-1', 'A-3', 'ASHCS-P-3');
+('H-3', 'ASHCS-D-1', 'A-3', 'ASHCS-P-3'),
+('H-4', 'ASHCS-D-3', 'A-4', 'ASHCS-P-3'),
+('H-5', 'ASHCS-D-2', 'A-5', 'ASHCS-P-3'),
+('H-6', 'ASHCS-D-2', 'A-6', 'ASHCS-P-5'),
+('H-7', 'ASHCS-D-2', 'A-9', 'ASHCS-P-6');
 
 -- --------------------------------------------------------
 
@@ -282,11 +321,11 @@ CREATE TABLE `medicines` (
 --
 
 INSERT INTO `medicines` (`medicine_id`, `medicine_name`, `medicine_type`, `quantity`, `medicine_price`) VALUES
-('M-1', 'Napa', 'Tablet', 496, 20),
-('M-2', 'Hexisol', 'Dispencer', 30, 75),
+('M-1', 'Napa', 'Tablet', 470, 20),
+('M-2', 'Hexisol', 'Dispencer', 24, 75),
 ('M-4', 'Ciprocin', 'Tablet', 498, 140),
 ('M-5', 'Savlon', 'Dispencer', 49, 30),
-('M-6', 'Morphin', 'Injection', 99, 750),
+('M-6', 'Morphin', 'Injection', 97, 750),
 ('M-7', 'Ace', 'Syrup', 300, 45);
 
 -- --------------------------------------------------------
@@ -331,7 +370,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (23, '2022_07_10_041134_create_premium_payments_table', 16),
 (24, '2022_07_10_041850_create_premium_charges_table', 17),
 (25, '2022_07_10_092641_create_reports_table', 18),
-(26, '2022_07_11_061937_create_carts_table', 19);
+(26, '2022_07_11_061937_create_carts_table', 19),
+(27, '2022_07_30_061308_create_tokens_table', 20);
 
 -- --------------------------------------------------------
 
@@ -373,10 +413,15 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`order_id`, `user_id`, `status`, `total_price`, `order_date`) VALUES
 ('O-1', 'ASHCS-P-1', 'Ordered', 1500, '2022-07-06'),
+('O-10', 'ASHCS-P-6', 'Shipped', 309, '2022-07-19'),
 ('O-2', 'ASHCS-P-2', 'Shipped', 190, '2022-07-08'),
 ('O-3', 'ASHCS-P-3', 'Cancelled', 1060, '2022-07-11'),
 ('O-4', 'ASHCS-P-3', 'Cancelled', 76, '2022-07-11'),
-('O-5', 'ASHCS-P-3', 'Cancelled', 38, '2022-07-11');
+('O-5', 'ASHCS-P-3', 'Cancelled', 38, '2022-07-11'),
+('O-6', 'ASHCS-P-5', 'Shipped', 808, '2022-07-13'),
+('O-7', 'ASHCS-P-3', 'Cancelled', 57, '2022-07-13'),
+('O-8', 'ASHCS-P-3', 'Ordered', 57, '2022-07-13'),
+('O-9', 'ASHCS-P-6', 'Cancelled', 309, '2022-07-19');
 
 -- --------------------------------------------------------
 
@@ -404,7 +449,15 @@ INSERT INTO `order_details` (`order_id`, `medicine_id`, `quantity`, `unit_price`
 ('O-3', 'M-5', '1', '30', '30'),
 ('O-3', 'M-4', '2', '140', '280'),
 ('O-4', 'M-1', '4', '20', '80'),
-('O-5', 'M-1', '2', '20', '40');
+('O-5', 'M-1', '2', '20', '40'),
+('O-6', 'M-1', '5', '20', '100'),
+('O-6', 'M-6', '1', '750', '750'),
+('O-7', 'M-1', '3', '20', '60'),
+('O-8', 'M-1', '3', '20', '60'),
+('O-9', 'M-1', '5', '20', '100'),
+('O-9', 'M-2', '3', '75', '225'),
+('O-10', 'M-1', '5', '20', '100'),
+('O-10', 'M-2', '3', '75', '225');
 
 -- --------------------------------------------------------
 
@@ -444,7 +497,9 @@ INSERT INTO `patients` (`patient_id`, `patient_name`, `patient_email`, `patient_
 ('ASHCS-P-1', 'Jakia Sultana', 'abidurrahmannabil.aiub@gmail.com', 'jakia12', 'Female', '2000-01-12', 'HH4sGp8IIngQZi7mOOlrvb5XLCzy2IBqauLy1YIe.jpg', 'Premium', 'Valid'),
 ('ASHCS-P-2', 'Anahita Hossain', 'anahita@gmail.com', 'ana123', 'Female', '2000-07-03', 'ana.jpg', 'Premium', 'Valid'),
 ('ASHCS-P-3', 'Nazmul Hossain', 'nazmul@aiub.edu', 'nazmul123', 'Male', '1999-09-21', 'titRNNdfCN813C13kc9Cr1aFruOq9OpSeqDow3Je.jpg', 'Premium', 'Valid'),
-('ASHCS-P-4', 'Afnan Shahriar', 'afnan@gmail.com', 'afnan123', 'Male', '2022-07-01', 'FdIO7gxPN68OeTwuS4hoHlqyynPDJp6T8vbcwr7K.jpg', 'Basic', 'Valid');
+('ASHCS-P-4', 'Afnan Shahriar', 'afnan@gmail.com', 'afnan123', 'Male', '2022-07-01', 'FdIO7gxPN68OeTwuS4hoHlqyynPDJp6T8vbcwr7K.jpg', 'Basic', 'Valid'),
+('ASHCS-P-5', 'Adety Sarkar', 'adetysarkar@gmail.com', 'adety123', 'Female', '2000-06-09', 'UNS9vUcV5cx7rN3XLK2nUM4jRJyeJTRx17nilK9m.jpg', 'Premium', 'Valid'),
+('ASHCS-P-6', 'Jakia Sultana Nupur', 'jakianupur19@gmail.com', 'jakia12', 'Female', '2022-07-19', 'pC3JurlXvkaPSo3tq0jxcfTMbYcOMF9GKKtPKJKH.jpg', 'Premium', 'Valid');
 
 -- --------------------------------------------------------
 
@@ -467,7 +522,11 @@ CREATE TABLE `patient_payments` (
 INSERT INTO `patient_payments` (`payment_id`, `paid_amount`, `doctor_id`, `patient_id`, `appointment_id`) VALUES
 ('P-1', 10, 'ASHCS-D-2', 'ASHCS-P-1', 'A-1'),
 ('P-2', 10, 'ASHCS-D-2', 'ASHCS-P-2', 'A-2'),
-('P-3', 20, 'ASHCS-D-1', 'ASHCS-P-3', 'A-3');
+('P-3', 20, 'ASHCS-D-1', 'ASHCS-P-3', 'A-3'),
+('P-4', 16, 'ASHCS-D-3', 'ASHCS-P-3', 'A-4'),
+('P-5', 11, 'ASHCS-D-2', 'ASHCS-P-3', 'A-5'),
+('P-6', 11, 'ASHCS-D-2', 'ASHCS-P-5', 'A-6'),
+('P-7', 11, 'ASHCS-D-2', 'ASHCS-P-6', 'A-9');
 
 -- --------------------------------------------------------
 
@@ -504,7 +563,7 @@ CREATE TABLE `premium_charges` (
 --
 
 INSERT INTO `premium_charges` (`c_id`, `charge`, `discount`) VALUES
-('C-1', '25', '50');
+('C-1', '25', '10');
 
 -- --------------------------------------------------------
 
@@ -527,7 +586,9 @@ CREATE TABLE `premium_payments` (
 INSERT INTO `premium_payments` (`p_id`, `amount`, `patient_id`, `method`, `paid_at`) VALUES
 ('PY-1', '23', 'ASHCS-P-1', 'bKash', '2022-07-10'),
 ('PY-2', '23', 'ASHCS-P-2', 'Nagad', '2022-07-09'),
-('PY-3', '21.25', 'ASHCS-P-3', 'Bkash', '2022-07-10');
+('PY-3', '21.25', 'ASHCS-P-3', 'Bkash', '2022-07-10'),
+('PY-4', '7.5', 'ASHCS-P-5', 'Bkash', '2022-07-13'),
+('PY-5', '7.5', 'ASHCS-P-6', 'Rocket', '2022-07-19');
 
 -- --------------------------------------------------------
 
@@ -610,6 +671,32 @@ CREATE TABLE `sellers` (
 
 INSERT INTO `sellers` (`seller_id`, `seller_name`, `seller_pass`, `seller_email`, `seller_dp`) VALUES
 ('ASHCS-MS-1', 'Ashraful Adhir', 'adhir123', 'adhir@gmail.com', 'TfxzqYhHJTn6UyPWGCMUWOq4t1GmlUoPXwr5yVQz.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tokens`
+--
+
+CREATE TABLE `tokens` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token_for` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL,
+  `expired_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tokens`
+--
+
+INSERT INTO `tokens` (`id`, `user_id`, `token`, `token_for`, `created_at`, `expired_at`) VALUES
+(1, 'ASHCS-D-2', '77YFeAJPc9EinUzAZq40brLwv2Ce3pP1DBpHbPaLgFzBXrZylgs1wqz6FwEWImqR', 'Doctor', '2022-07-30 07:05:11', '2022-07-30 07:23:19'),
+(3, 'ASHCS-P-1', '8618omGjhv8YFrF0m1ynqt7YmBnXNrU3cP6D4r5kyHrmsyYXAXKQ7oH2eVVIwDGL', 'Patient', '2022-07-30 07:33:58', '2022-07-30 07:34:07'),
+(4, 'ASHCS-MS-1', 'ojv2trGIA8HjFhXslR1ZH5TBqzd18GCxUhcJVxWVw4bzumNZFjZcPtOHcKIYJexL', 'Seller', '2022-07-30 07:34:58', '2022-07-30 07:35:02'),
+(5, 'ASHCS-AD-1', 'q589i1VP5uWeyViyPSNdUmihnwmpHT8OmpBqtQ8ikluZv658okyWCojCFX06o85O', 'Admin', '2022-07-30 07:35:11', '2022-07-30 07:35:18'),
+(6, 'ASHCS-P-1', 'w7PuJSdbn5VakgJ4h4t9KvBDxLPgGeark0mIQp4EyWshFwTNfW3lX6VzcYE5ACus', 'Patient', '2022-07-30 10:37:23', '2022-07-30 10:37:27');
 
 -- --------------------------------------------------------
 
@@ -811,6 +898,12 @@ ALTER TABLE `sellers`
   ADD PRIMARY KEY (`seller_id`);
 
 --
+-- Indexes for table `tokens`
+--
+ALTER TABLE `tokens`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -831,13 +924,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tokens`
+--
+ALTER TABLE `tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
