@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2022 at 03:12 PM
+-- Generation Time: Jul 31, 2022 at 05:05 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -179,7 +179,8 @@ CREATE TABLE `doctors` (
 INSERT INTO `doctors` (`doctor_id`, `doctor_name`, `doctor_email`, `doctor_pass`, `doctor_gender`, `doctor_degree`, `doctor_dp`, `doctor_type`, `doctor_specialty`, `status`) VALUES
 ('ASHCS-D-1', 'Abidur Rahman Nabil', 'nabilrt51@gmail.com', 'nab123', 'Male', 'V56jXy90TeUShG81QEtrfHhUsaCgm1LxMTeESElG.pdf', 'GJZqY8fy8oT3myS7VT7FDAZ0xEjpn7jE7xyCcKAR.jpg', 'Specialist', 'Surgeon', 'Valid'),
 ('ASHCS-D-2', 'Arpita Datta', 'arpitadatta081@gmail.com', 'arpita123', 'Female', '6PFQCenSExnn5OUlihZWy5Z1aCK75QdcCSZXCtgd.pdf', '9IcwW8VM5IzjPiqAKHLDrQnSlAjTU5QYv8klNrrw.jpg', 'Specialist', 'Gynochologist', 'Valid'),
-('ASHCS-D-3', 'Sazin Israk Prioty', '19-41635-3@student.aiub.edu', 'sazin12', 'Female', 'LY5eDz2L8Hx880vwzrQMP17nadYF6hmD34FTCgvF.pdf', 'fxynrT2CfC7WE3xsiMEA8GTRlB5kPrXuc5ZZZmjW.jpg', 'Normal', 'Medicine', 'Blocked');
+('ASHCS-D-3', 'Sazin Israk Prioty', '19-41635-3@student.aiub.edu', 'sazin12', 'Female', 'LY5eDz2L8Hx880vwzrQMP17nadYF6hmD34FTCgvF.pdf', 'fxynrT2CfC7WE3xsiMEA8GTRlB5kPrXuc5ZZZmjW.jpg', 'Normal', 'Medicine', 'Blocked'),
+('ASHCS-D-4', 'Nabil Rahman', 'abidurrahmannabil.aiub@gmail.com', 'nab111', 'Male', 'AA', 'DP', 'Normal', 'Surgeon', 'Valid');
 
 -- --------------------------------------------------------
 
@@ -371,7 +372,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (24, '2022_07_10_041850_create_premium_charges_table', 17),
 (25, '2022_07_10_092641_create_reports_table', 18),
 (26, '2022_07_11_061937_create_carts_table', 19),
-(27, '2022_07_30_061308_create_tokens_table', 20);
+(27, '2022_07_30_061308_create_tokens_table', 20),
+(28, '2022_07_31_145445_create_o_t_p_s_table', 21);
 
 -- --------------------------------------------------------
 
@@ -458,6 +460,27 @@ INSERT INTO `order_details` (`order_id`, `medicine_id`, `quantity`, `unit_price`
 ('O-9', 'M-2', '3', '75', '225'),
 ('O-10', 'M-1', '5', '20', '100'),
 ('O-10', 'M-2', '3', '75', '225');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `o_t_p_s`
+--
+
+CREATE TABLE `o_t_p_s` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `otp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `expired` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `o_t_p_s`
+--
+
+INSERT INTO `o_t_p_s` (`id`, `otp`, `user_id`, `created_on`, `expired`) VALUES
+(1, '4073', 'ASHCS-D-4', '2022-07-31 15:03:28', 'yes');
 
 -- --------------------------------------------------------
 
@@ -696,7 +719,12 @@ INSERT INTO `tokens` (`id`, `user_id`, `token`, `token_for`, `created_at`, `expi
 (3, 'ASHCS-P-1', '8618omGjhv8YFrF0m1ynqt7YmBnXNrU3cP6D4r5kyHrmsyYXAXKQ7oH2eVVIwDGL', 'Patient', '2022-07-30 07:33:58', '2022-07-30 07:34:07'),
 (4, 'ASHCS-MS-1', 'ojv2trGIA8HjFhXslR1ZH5TBqzd18GCxUhcJVxWVw4bzumNZFjZcPtOHcKIYJexL', 'Seller', '2022-07-30 07:34:58', '2022-07-30 07:35:02'),
 (5, 'ASHCS-AD-1', 'q589i1VP5uWeyViyPSNdUmihnwmpHT8OmpBqtQ8ikluZv658okyWCojCFX06o85O', 'Admin', '2022-07-30 07:35:11', '2022-07-30 07:35:18'),
-(6, 'ASHCS-P-1', 'w7PuJSdbn5VakgJ4h4t9KvBDxLPgGeark0mIQp4EyWshFwTNfW3lX6VzcYE5ACus', 'Patient', '2022-07-30 10:37:23', '2022-07-30 10:37:27');
+(6, 'ASHCS-P-1', 'w7PuJSdbn5VakgJ4h4t9KvBDxLPgGeark0mIQp4EyWshFwTNfW3lX6VzcYE5ACus', 'Patient', '2022-07-30 10:37:23', '2022-07-30 10:37:27'),
+(7, 'ASHCS-D-2', 'bdX0BnV0WjD6thAKnvZeSKe2TK0rUrinkyTzBivorHe43OuNG2IGoPRY58KYm6dh', 'Doctor', '2022-07-30 13:25:42', '2022-07-30 13:25:51'),
+(8, 'ASHCS-P-1', 'dC3J2IWedKzwVQnKnwn49Y8ZZsuYgsdpDKw8bMePLEhJ2SiCWDq6u0Y3MjKtrw1L', 'Patient', '2022-07-30 13:30:28', '2022-07-30 13:30:39'),
+(9, 'ASHCS-D-2', 'wagj2F4fgyxbFEKTuTTUJeOX1G08iO4PgGYSyTlUQ6uQxdMZrojlVsxtZ8eo0iDJ', 'Doctor', '2022-07-31 03:49:55', '2022-07-31 03:50:07'),
+(10, 'ASHCS-D-2', '9ZxSprJTHHCOX6JnLtGdPKK1V7CUMv8xj1gMUet1JSn8QhFpHGGTzV9JXarRZd6F', 'Doctor', '2022-07-31 03:52:54', '2022-07-31 03:53:04'),
+(11, 'ASHCS-D-4', 'ADtcmgqEXewZcPFPWVVmoUFx96COA2iK6N1aj1Om9786N8Aci61Id8Rq1vZl7wgM', 'Doctor', '2022-07-31 14:49:52', '2022-07-31 14:49:55');
 
 -- --------------------------------------------------------
 
@@ -830,6 +858,12 @@ ALTER TABLE `order_details`
   ADD KEY `order_details_medicine_id_foreign` (`medicine_id`);
 
 --
+-- Indexes for table `o_t_p_s`
+--
+ALTER TABLE `o_t_p_s`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -924,7 +958,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT for table `o_t_p_s`
+--
+ALTER TABLE `o_t_p_s`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -936,7 +976,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `tokens`
 --
 ALTER TABLE `tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`

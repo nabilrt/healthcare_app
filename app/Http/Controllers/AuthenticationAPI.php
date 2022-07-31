@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResetPassword;
+use App\Mail\UserVerification;
 use App\Models\Admin;
 use App\Models\Doctor;
+use App\Models\OTP;
 use App\Models\Patient;
 use App\Models\Seller;
 use App\Models\Token;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AuthenticationAPI extends Controller
@@ -114,5 +118,76 @@ class AuthenticationAPI extends Controller
             return "Admin";
         }
         return "No";
+    }
+
+    public function doc_register(Request $req){
+
+        $otp =rand(1000,5000);
+        setcookie('otp',$otp, time()+120000);
+        $u_id=$this->generateID();
+        $data=array(
+            'otp'=>$otp,
+            'u_id'=>$u_id,
+        );
+
+        $otps=new OTP();
+        $otps->otp=$otp;
+        $otps->user_id=$u_id;
+        $otps->created_on=new DateTime();
+        $otps->save();
+
+
+
+        Mail::to($req->email)->send(new UserVerification($data));
+
+
+
+        $doctor=new Doctor();
+        $doctor->doctor_id = $u_id;
+        $doctor->doctor_name=$req->name;
+        $doctor->doctor_email=$req->email;
+        $doctor->doctor_pass=$req->pass;
+        $doctor->doctor_gender=$req->gender;
+        $doctor->doctor_dp="DP";
+        $doctor->doctor_degree="AA";
+        $doctor->doctor_type=$req->type;
+        $doctor->doctor_specialty=$req->speciality;
+        $doctor->status="Valid";
+        $doctor->save();
+
+        return "Registered";
+
+
+    }
+
+    public function OTP_Verification(Request $req){
+
+        $otp = $req->otp;
+        $data = OTP::where('otp', $otp)->where('expired', NULL)->first();
+        if($data){
+            OTP::where('otp', $data->otp)->update(['expired' => "yes"]);
+            return $data;
+        }
+        return "Otp Invalid";
+
+
+    }
+
+    public function generateID(){
+
+        $doctor=Doctor::orderBy('doctor_id','desc')->first();
+        if(empty($doctor)){
+            $Doctor_ID="ASHCS-D-1";
+            return $Doctor_ID;
+        }else{
+            $rec=explode('-',$doctor->doctor_id);
+            $new_id=(int)$rec[2];
+            $updated_id=$new_id+1;
+
+            $Doctor_ID="ASHCS-D-".str($updated_id);
+
+            return $Doctor_ID;
+        }
+
     }
 }
