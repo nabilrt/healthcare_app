@@ -93,9 +93,9 @@ class AuthenticationAPI extends Controller
 
     }
 
-    public function logout(){
+    public function logout(Request $req){
 
-        $activeUser=Token::where('expired_at',NULL)->first();
+        $activeUser=Token::where('token',$req->token)->first();
         $activeUser->expired_at=new DateTime();
         $activeUser->save();
 
@@ -123,7 +123,7 @@ class AuthenticationAPI extends Controller
     public function doc_register(Request $req){
 
         $otp =rand(1000,5000);
-        setcookie('otp',$otp, time()+120000);
+
         $u_id=$this->generateID();
         $data=array(
             'otp'=>$otp,
