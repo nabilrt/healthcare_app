@@ -17,7 +17,7 @@
                         <form id="formAccountSettings" action="{{ route('p_profileUpdate') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="p_id" value="{{ session('username') }}">
-                            <h5 class="card-header">Profile Details</h5>
+                            <h5 class="card-header">Profile Info</h5>
                             <!-- Account -->
                             <div class="card-body">
                                 <div class="d-flex align-items-start align-items-sm-center gap-4">
