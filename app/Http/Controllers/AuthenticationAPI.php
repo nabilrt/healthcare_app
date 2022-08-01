@@ -102,6 +102,58 @@ class AuthenticationAPI extends Controller
         return "Success";
 
     }
+    public function patient_register(Request $req)
+    {
+        $otp =rand(1000,5000);
+
+        $u_id=$this->generateID_p();
+        $data=array(
+            'otp'=>$otp,
+            'u_id'=>$u_id,
+        );
+
+        $otps=new OTP();
+        $otps->otp=$otp;
+        $otps->user_id=$u_id;
+        $otps->created_on=new DateTime();
+        $otps->save();
+
+
+
+        Mail::to($req->email)->send(new UserVerification($data));
+        $patient=new Patient();
+        $patient->patient_id=$u_id;
+        $patient->patient_name=$req->name;
+        $patient->patient_email=$req->email;
+        $patient->patient_pass=$req->pass;
+        $patient->patient_gender=$req->gender;
+        $patient->patient_dob=$req->dob;
+        $patient->patient_dp="abc";
+        $patient->membership_type="Basic";
+        $patient->status="Valid";
+        $patient->save();
+
+        return "Registered";
+
+    }
+
+    public function generateID_p(){
+
+        $patient=Patient::orderBy('patient_id','desc')->first();
+        if(empty($patient)){
+
+            return "ASHCS-P-1";
+        }else{
+            $rec=explode('-',$patient->patient_id);
+            $new_id=(int)$rec[2];
+            $updated_id=$new_id+1;
+
+            return "ASHCS-P-".str($updated_id);
+        }
+
+
+
+    }
 
     public function userExistence(){
 

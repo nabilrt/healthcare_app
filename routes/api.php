@@ -23,4 +23,6 @@ Route::post('/login',[AuthenticationAPI::class,'login']);
 Route::post('/logout',[AuthenticationAPI::class,'logout']);
 Route::get('/userExist',[AuthenticationAPI::class,'userExistence']);
 Route::post('/register/doctor',[AuthenticationAPI::class,'doc_register']);
-Route::post('/doctor/verification',[AuthenticationAPI::class,'OTP_Verification']);
+Route::post('/user/verification',[AuthenticationAPI::class,'OTP_Verification']);
+Route::post('/register/patient',[AuthenticationAPI::class,'patient_register']);
+
