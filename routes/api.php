@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthenticationAPI;
+use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\InboxController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +27,9 @@ Route::get('/userExist',[AuthenticationAPI::class,'userExistence']);
 Route::post('/register/doctor',[AuthenticationAPI::class,'doc_register']);
 Route::post('/user/verification',[AuthenticationAPI::class,'OTP_Verification']);
 Route::post('/register/patient',[AuthenticationAPI::class,'patient_register']);
+Route::post('/doctor/inbox',[InboxController::class,'apiInboxFetch']);
+Route::get('/doctor/convo/{id}',[ConversationController::class,'getMessageAPIDoctor']);
+Route::post('/doctor/convo/reply',[ConversationController::class,'replyMessageAPIDoctor']);
+Route::post('/doctor/convo/message/new',[ConversationController::class,'newMessageAPIDoctor']);
+Route::get('/doctor/appointment/finish/{id}',[InboxController::class,'finishAppointmentAPIDoctor']);
 

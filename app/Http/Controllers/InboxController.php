@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Inbox;
 use App\Models\Doctor;
 use App\Models\Patient;
+use App\Models\Token;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreInboxRequest;
 use App\Http\Requests\UpdateInboxRequest;
@@ -35,10 +36,24 @@ class InboxController extends Controller
 
     }
 
+    public function apiInboxFetch(Request $req){
+
+        $activeUser=Token::where('token',$req->token)->first();
+
+        return Inbox::where('doctor_id',$activeUser->user_id)->get();
+
+    }
+
     public function finish(Request $req){
         $inbox = Inbox::where('inbox_id',$req->i_id)->first();
         $inbox->delete();
         return redirect()->route('inbox');
+    }
+
+    public function finishAppointmentAPIDoctor(Request $req){
+        $inbox = Inbox::where('inbox_id',$req->id)->first();
+        $inbox->delete();
+        return "Finished";
     }
 
     /**
