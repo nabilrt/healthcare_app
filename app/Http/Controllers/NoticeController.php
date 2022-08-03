@@ -25,6 +25,12 @@ class NoticeController extends Controller
         return view('Admin.create_notice')->with('admin',$admin);
     }
 
+    public function getDocNotices(Request $req){
+
+        return Notice::where('notice_for',"Doctor")->get();
+
+    }
+
     public function doctorNotices(){
 
         $doctor=Doctor::where('doctor_id',session('username'))->first();

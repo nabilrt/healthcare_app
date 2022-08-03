@@ -3,9 +3,11 @@
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthenticationAPI;
 use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\InboxController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\MedicalHistoryController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PatientPaymentController;
 use App\Http\Controllers\RemunerationController;
 use Illuminate\Http\Request;
@@ -44,4 +46,6 @@ Route::post('/doctor/payment/profile',[RemunerationController::class,'paymentSet
 Route::post('/doctor/payment/profile/create',[RemunerationController::class,'paySetupDoctor']);
 Route::post('/doctor/medical/histories',[MedicalHistoryController::class,'getMedHistAPI']);
 Route::get('/doctor/medical/history/{id}',[IssueController::class,'getMedIssuesAPI']);
-
+Route::post('/doctor/profile',[DoctorController::class,'getProfileDetails']);
+Route::post('/doctor/profile/update',[DoctorController::class,'updateProfileDetails']);
+Route::post('/doctor/notices',[NoticeController::class,'getDocNotices']);

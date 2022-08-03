@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'AccessRequest'=>\App\Http\Middleware\AccessRequest::class,
         'ValidAdmin'=>\App\Http\Middleware\ValidAdmin::class,
         'ValidSeller'=>\App\Http\Middleware\ValidSeller::class,
-        'ValidDoctor'=>\App\Http\Middleware\ValidDoctor::class
+        'ValidDoctor'=>\App\Http\Middleware\ValidDoctor::class,
+        'APIAuthentication'=>\App\Http\Middleware\APIAuthentication::class
     ];
 }

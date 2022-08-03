@@ -9,6 +9,7 @@ use App\Models\Patient;
 use App\Models\Inbox;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
+use App\Models\Token;
 use Illuminate\Http\Request;
 use App\Mail\Prescription;
 use Illuminate\Support\Facades\Mail;
@@ -139,6 +140,26 @@ class DoctorController extends Controller
 
             return back()->with('msg','Registration Unable To Complete');
         }
+
+    }
+
+    public function getProfileDetails(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        $doctor=Doctor::where('doctor_id',$userActive->user_id)->first();
+
+        return $doctor;
+    }
+
+    public function updateProfileDetails(Request $req){
+        $userActive=Token::where('token',$req->token)->first();
+        $doctor=Doctor::where('doctor_id',$userActive->user_id)->first();
+        $doctor->doctor_name=$req->name;
+        $doctor->doctor_email=$req->email;
+        $doctor->doctor_pass=$req->pass;
+        $doctor->save();
+
+        return "Saved";
 
     }
 
