@@ -33,6 +33,12 @@ class IssueController extends Controller
         ->with('doctor',$doctor);
     }
 
+    public function getMedIssuesAPI(Request $req){
+
+        return Issue::where('his_id',$req->id)->get();
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

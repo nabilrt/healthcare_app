@@ -8,6 +8,7 @@ use App\Models\Patient;
 use App\Models\PremiumPayment;
 use App\Http\Requests\StoreRemunerationRequest;
 use App\Http\Requests\UpdateRemunerationRequest;
+use App\Models\Token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -72,6 +73,42 @@ class RemunerationController extends Controller
         return redirect()->route('pay_setup');
 
 
+    }
+
+    public function paymentSetupDoctor(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        $doctor=Remuneration::where('doctor_id',$userActive->user_id)->first();
+        if($doctor){
+            return $doctor;
+        }
+        return "None";
+
+    }
+
+    public function paySetupDoctor(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        $remu=Remuneration::where('doctor_id',$userActive->user_id)->first();
+
+        if($remu){
+            $remu->visit=$req->visit;
+            $remu->discount_per=$req->disc_per;
+            $remu->save();
+            return "Updated";
+
+        }else{
+
+            $id=$this->generateID();
+            $rem=new Remuneration();
+            $rem->rm_id=$id;
+            $rem->visit=$req->visit;
+            $rem->discount_per=$req->disc_per;
+            $rem->doctor_id=$userActive->user_id;
+            $rem->save();
+
+            return "Saved";
+        }
     }
 
     /**

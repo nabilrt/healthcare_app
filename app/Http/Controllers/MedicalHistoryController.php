@@ -6,6 +6,8 @@ use App\Models\MedicalHistory;
 use App\Models\Doctor;
 use App\Http\Requests\StoreMedicalHistoryRequest;
 use App\Http\Requests\UpdateMedicalHistoryRequest;
+use App\Models\Token;
+use Illuminate\Http\Request;
 
 class MedicalHistoryController extends Controller
 {
@@ -20,6 +22,15 @@ class MedicalHistoryController extends Controller
         $medicalHistory=MedicalHistory::where('doctor_id',session('username'))->get();
         $doctor=Doctor::where('doctor_id',session('username'))->first();
         return view('Doctor.medical_histories')->with('doctor',$doctor)->with('medhist',$medicalHistory);
+    }
+
+    public function getMedHistAPI(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        $medicalHistory=MedicalHistory::where('doctor_id',$userActive->user_id)->get();
+
+        return $medicalHistory;
+
     }
 
     /**

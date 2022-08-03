@@ -28,7 +28,7 @@ class AuthenticationAPI extends Controller
         if($rec[1]=="D"){
 
             $doctor = Doctor::whereRaw("BINARY doctor_id = '$username'")->whereRaw("BINARY doctor_pass = '$password'")->first();
-            if($doctor){
+            if($doctor && $doctor->email_verified=="yes"){
 
                 $api_token = Str::random(64);
                 $token = new Token();
@@ -39,12 +39,14 @@ class AuthenticationAPI extends Controller
                 $token->save();
                 return $token;
 
+            }else{
+                return "Not Verified";
             }
         }
         else if($rec[1]=="P"){
 
             $patient=Patient::where('patient_id',$req->username)->where('patient_pass',$password)->first();
-            if($patient){
+            if($patient && $patient->email_verified=="yes"){
 
                 $api_token = Str::random(64);
                 $token = new Token();
@@ -55,6 +57,9 @@ class AuthenticationAPI extends Controller
                 $token->save();
                 return $token;
 
+            }else{
+
+                return "Not Verified";
             }
         }
         else if($rec[1]=="MS"){
@@ -155,9 +160,10 @@ class AuthenticationAPI extends Controller
 
     }
 
-    public function userExistence(){
+    public function userExistence(Request $req){
 
-        $activeUser=Token::where('expired_at',NULL)->first();
+        $activeUser=Token::where('token',$req->token)->where('expired_at',NULL)->first();
+
         if($activeUser && $activeUser->token_for=="Doctor"){
             return "Doctor";
         }else if($activeUser && $activeUser->token_for=="Patient"){
@@ -169,7 +175,10 @@ class AuthenticationAPI extends Controller
         else if($activeUser && $activeUser->token_for=="Admin"){
             return "Admin";
         }
-        return "No";
+
+            return "No";
+
+
     }
 
     public function doc_register(Request $req){
@@ -216,9 +225,16 @@ class AuthenticationAPI extends Controller
 
         $otp = $req->otp;
         $data = OTP::where('otp', $otp)->where('expired', NULL)->first();
+        $rec=explode('-',$data->user_id);
         if($data){
             OTP::where('otp', $data->otp)->update(['expired' => "yes"]);
-            return $data;
+            if($rec[1]==="D"){
+                Doctor::where('doctor_id',$data->user_id)->update(['email_verified'=>'yes']);
+                return $data;
+            }else if($rec[1]==="P"){
+                Patient::where('patient_id',$data->user_id)->update(['email_verified'=>'yes']);
+                return $data;
+            }
         }
         return "Otp Invalid";
 
