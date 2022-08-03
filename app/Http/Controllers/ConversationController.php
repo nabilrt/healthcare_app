@@ -95,6 +95,11 @@ class ConversationController extends Controller
          return Conversation::where('inbox_id',$req->id)->get();
 
      }
+    public function getMessageAPIPatient(Request $req){
+
+        return Conversation::where('inbox_id',$req->id)->get();
+
+    }
 
      public function replyMessageAPIDoctor(Request $req){
 
@@ -103,6 +108,13 @@ class ConversationController extends Controller
         $conversation->save();
         return "Replied";
      }
+    public function replyMessageAPIPatient(Request $req){
+
+        $conversation=Conversation::where('conv_id',$req->c_id)->first();
+        $conversation->reply=$req->reply;
+        $conversation->save();
+        return "Replied";
+    }
 
      public function p_reply(Request $req){
 
@@ -133,6 +145,21 @@ class ConversationController extends Controller
         return "Sent";
 
      }
+    public function newMessageAPIPatient(Request $req){
+
+        $inb=Inbox::where('inbox_id',$req->i_id)->first();
+        $conv=new Conversation();
+        $conv->conv_id="C-".rand(11,1000);
+        $conv->inbox_id=$req->i_id;
+        $conv->patient_id=$inb->patient_id;
+        $conv->doctor_id=$inb->doctor_id;
+        $conv->message=$req->msg;
+        $conv->reply="";
+        $conv->save();
+
+        return "Sent";
+
+    }
 
      public function generateID(){
 

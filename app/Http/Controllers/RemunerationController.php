@@ -159,6 +159,30 @@ class RemunerationController extends Controller
 
 
     }
+    public function normalDoctor(Request $req)
+    {
+        return DB::table('remunerations')->join('doctors','remunerations.doctor_id',"=",'doctors.doctor_id')
+            ->where('doctor_type','Normal')->where('status','Valid')->get();
+
+    }
+    public function allDoctor(Request $req)
+    {
+        return DB::table('remunerations')->join('doctors','remunerations.doctor_id',"=",'doctors.doctor_id')->where('status','Valid')->get();
+    }
+    public function patientStatus(Request $req){
+
+        $activeUser=Token::where('token',$req->token)->first();
+
+        $is_premium=PremiumPayment::where('patient_id',$activeUser->user_id)->first();
+
+        if($is_premium){
+
+            return "yes";
+        }
+
+        return "no";
+    }
+
 
     /**
      * Show the form for editing the specified resource.

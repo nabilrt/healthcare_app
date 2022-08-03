@@ -43,6 +43,13 @@ class InboxController extends Controller
         return Inbox::where('doctor_id',$activeUser->user_id)->get();
 
     }
+    public function apiInboxFetchPatient(Request $req){
+
+        $activeUser=Token::where('token',$req->token)->first();
+
+        return Inbox::where('patient_id',$activeUser->user_id)->get();
+
+    }
 
     public function finish(Request $req){
         $inbox = Inbox::where('inbox_id',$req->i_id)->first();
