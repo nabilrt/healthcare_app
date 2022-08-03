@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 31, 2022 at 05:05 PM
+-- Generation Time: Aug 03, 2022 at 05:18 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -144,14 +144,14 @@ CREATE TABLE `conversations` (
 
 INSERT INTO `conversations` (`conv_id`, `inbox_id`, `doctor_id`, `patient_id`, `message`, `reply`) VALUES
 ('C-1', 'I-1', 'ASHCS-D-2', 'ASHCS-P-1', 'Hello Patient', 'Hi'),
+('C-10', 'I-1', 'ASHCS-D-2', 'ASHCS-P-1', 'Hi Doc', 'What Happend!'),
 ('C-2', 'I-1', 'ASHCS-D-2', 'ASHCS-P-1', 'Hi', 'Hello'),
 ('C-3', 'I-1', 'ASHCS-D-2', 'ASHCS-P-1', 'Yes', 'No'),
 ('C-4', 'I-1', 'ASHCS-D-2', 'ASHCS-P-1', 'Hi Doctor', 'Help Me'),
 ('C-5', 'I-2', 'ASHCS-D-1', 'ASHCS-P-3', 'Hello Doctor! I need help.', 'What Happend!'),
+('C-578', 'I-5', 'ASHCS-D-2', 'ASHCS-P-5', 'Hi Patient', ''),
 ('C-6', 'I-5', 'ASHCS-D-2', 'ASHCS-P-5', 'Hello Doctor! I need help.', ''),
-('C-7', 'I-6', 'ASHCS-D-2', 'ASHCS-P-6', 'Hello Doctor! I need help.', ''),
-('C-8', 'I-6', 'ASHCS-D-2', 'ASHCS-P-6', 'Hello Doctor! I need help.', ''),
-('C-9', 'I-6', 'ASHCS-D-2', 'ASHCS-P-6', 'Hello Doctor! I need help.', '');
+('C-876', 'I-1', 'ASHCS-D-2', 'ASHCS-P-1', 'Hi Patient', '');
 
 -- --------------------------------------------------------
 
@@ -169,18 +169,20 @@ CREATE TABLE `doctors` (
   `doctor_dp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `doctor_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `doctor_specialty` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_verified` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `doctors`
 --
 
-INSERT INTO `doctors` (`doctor_id`, `doctor_name`, `doctor_email`, `doctor_pass`, `doctor_gender`, `doctor_degree`, `doctor_dp`, `doctor_type`, `doctor_specialty`, `status`) VALUES
-('ASHCS-D-1', 'Abidur Rahman Nabil', 'nabilrt51@gmail.com', 'nab123', 'Male', 'V56jXy90TeUShG81QEtrfHhUsaCgm1LxMTeESElG.pdf', 'GJZqY8fy8oT3myS7VT7FDAZ0xEjpn7jE7xyCcKAR.jpg', 'Specialist', 'Surgeon', 'Valid'),
-('ASHCS-D-2', 'Arpita Datta', 'arpitadatta081@gmail.com', 'arpita123', 'Female', '6PFQCenSExnn5OUlihZWy5Z1aCK75QdcCSZXCtgd.pdf', '9IcwW8VM5IzjPiqAKHLDrQnSlAjTU5QYv8klNrrw.jpg', 'Specialist', 'Gynochologist', 'Valid'),
-('ASHCS-D-3', 'Sazin Israk Prioty', '19-41635-3@student.aiub.edu', 'sazin12', 'Female', 'LY5eDz2L8Hx880vwzrQMP17nadYF6hmD34FTCgvF.pdf', 'fxynrT2CfC7WE3xsiMEA8GTRlB5kPrXuc5ZZZmjW.jpg', 'Normal', 'Medicine', 'Blocked'),
-('ASHCS-D-4', 'Nabil Rahman', 'abidurrahmannabil.aiub@gmail.com', 'nab111', 'Male', 'AA', 'DP', 'Normal', 'Surgeon', 'Valid');
+INSERT INTO `doctors` (`doctor_id`, `doctor_name`, `doctor_email`, `doctor_pass`, `doctor_gender`, `doctor_degree`, `doctor_dp`, `doctor_type`, `doctor_specialty`, `status`, `email_verified`) VALUES
+('ASHCS-D-1', 'Abidur Rahman Nabil', 'nabilrt51@gmail.com', 'nab123', 'Male', 'V56jXy90TeUShG81QEtrfHhUsaCgm1LxMTeESElG.pdf', 'GJZqY8fy8oT3myS7VT7FDAZ0xEjpn7jE7xyCcKAR.jpg', 'Specialist', 'Surgeon', 'Valid', NULL),
+('ASHCS-D-2', 'Arpita Datta', 'arpitadatta081@gmail.com', 'arpita1234', 'Female', '6PFQCenSExnn5OUlihZWy5Z1aCK75QdcCSZXCtgd.pdf', '9IcwW8VM5IzjPiqAKHLDrQnSlAjTU5QYv8klNrrw.jpg', 'Specialist', 'Gynochologist', 'Valid', 'yes'),
+('ASHCS-D-3', 'Sazin Israk Prioty', '19-41635-3@student.aiub.edu', 'sazin12', 'Female', 'LY5eDz2L8Hx880vwzrQMP17nadYF6hmD34FTCgvF.pdf', 'fxynrT2CfC7WE3xsiMEA8GTRlB5kPrXuc5ZZZmjW.jpg', 'Normal', 'Medicine', 'Blocked', NULL),
+('ASHCS-D-5', 'Riyad Ahmed', 'riyad@gmail.com', 'riyad123', 'Male', 'C3t1CNVXEaoJAZVHzE2Ox8QheyJaK8eNl90wsOgl.pdf', 'vYmm3EemkNSus3uOnzNgUXCOP7Lb3Mb3NQXmyqRs.jpg', 'Normal', 'Surgeon', 'Valid', NULL),
+('ASHCS-D-6', 'Nabil Rahman', 'abidurrahmannabil.aiub@gmail.com', 'sss', 'Male', 'AA', 'DP', 'Normal', 'Surgeon', 'Valid', 'yes');
 
 -- --------------------------------------------------------
 
@@ -240,8 +242,7 @@ INSERT INTO `inboxes` (`inbox_id`, `appointment_id`, `doctor_id`, `patient_id`) 
 ('I-2', 'A-3', 'ASHCS-D-1', 'ASHCS-P-3'),
 ('I-3', 'A-4', 'ASHCS-D-3', 'ASHCS-P-3'),
 ('I-4', 'A-5', 'ASHCS-D-2', 'ASHCS-P-3'),
-('I-5', 'A-6', 'ASHCS-D-2', 'ASHCS-P-5'),
-('I-6', 'A-9', 'ASHCS-D-2', 'ASHCS-P-6');
+('I-5', 'A-6', 'ASHCS-D-2', 'ASHCS-P-5');
 
 -- --------------------------------------------------------
 
@@ -480,7 +481,10 @@ CREATE TABLE `o_t_p_s` (
 --
 
 INSERT INTO `o_t_p_s` (`id`, `otp`, `user_id`, `created_on`, `expired`) VALUES
-(1, '4073', 'ASHCS-D-4', '2022-07-31 15:03:28', 'yes');
+(1, '4073', 'ASHCS-D-4', '2022-07-31 15:03:28', 'yes'),
+(2, '2741', 'ASHCS-D-4', '2022-07-31 15:17:20', 'yes'),
+(3, '1260', 'ASHCS-D-4', '2022-08-03 03:35:46', 'yes'),
+(6, '4823', 'ASHCS-D-6', '2022-08-03 09:22:03', 'yes');
 
 -- --------------------------------------------------------
 
@@ -509,20 +513,21 @@ CREATE TABLE `patients` (
   `patient_dob` date NOT NULL,
   `patient_dp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `membership_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_verified` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `patients`
 --
 
-INSERT INTO `patients` (`patient_id`, `patient_name`, `patient_email`, `patient_pass`, `patient_gender`, `patient_dob`, `patient_dp`, `membership_type`, `status`) VALUES
-('ASHCS-P-1', 'Jakia Sultana', 'abidurrahmannabil.aiub@gmail.com', 'jakia12', 'Female', '2000-01-12', 'HH4sGp8IIngQZi7mOOlrvb5XLCzy2IBqauLy1YIe.jpg', 'Premium', 'Valid'),
-('ASHCS-P-2', 'Anahita Hossain', 'anahita@gmail.com', 'ana123', 'Female', '2000-07-03', 'ana.jpg', 'Premium', 'Valid'),
-('ASHCS-P-3', 'Nazmul Hossain', 'nazmul@aiub.edu', 'nazmul123', 'Male', '1999-09-21', 'titRNNdfCN813C13kc9Cr1aFruOq9OpSeqDow3Je.jpg', 'Premium', 'Valid'),
-('ASHCS-P-4', 'Afnan Shahriar', 'afnan@gmail.com', 'afnan123', 'Male', '2022-07-01', 'FdIO7gxPN68OeTwuS4hoHlqyynPDJp6T8vbcwr7K.jpg', 'Basic', 'Valid'),
-('ASHCS-P-5', 'Adety Sarkar', 'adetysarkar@gmail.com', 'adety123', 'Female', '2000-06-09', 'UNS9vUcV5cx7rN3XLK2nUM4jRJyeJTRx17nilK9m.jpg', 'Premium', 'Valid'),
-('ASHCS-P-6', 'Jakia Sultana Nupur', 'jakianupur19@gmail.com', 'jakia12', 'Female', '2022-07-19', 'pC3JurlXvkaPSo3tq0jxcfTMbYcOMF9GKKtPKJKH.jpg', 'Premium', 'Valid');
+INSERT INTO `patients` (`patient_id`, `patient_name`, `patient_email`, `patient_pass`, `patient_gender`, `patient_dob`, `patient_dp`, `membership_type`, `status`, `email_verified`) VALUES
+('ASHCS-P-1', 'Jakia Sultana', 'abidurrahmannabil.aiub@gmail.com', 'jakia12', 'Female', '2000-01-12', 'HH4sGp8IIngQZi7mOOlrvb5XLCzy2IBqauLy1YIe.jpg', 'Premium', 'Valid', NULL),
+('ASHCS-P-2', 'Anahita Hossain', 'anahita@gmail.com', 'ana123', 'Female', '2000-07-03', 'ana.jpg', 'Premium', 'Valid', NULL),
+('ASHCS-P-3', 'Nazmul Hossain', 'nazmul@aiub.edu', 'nazmul123', 'Male', '1999-09-21', 'titRNNdfCN813C13kc9Cr1aFruOq9OpSeqDow3Je.jpg', 'Premium', 'Valid', NULL),
+('ASHCS-P-4', 'Afnan Shahriar', 'afnan@gmail.com', 'afnan123', 'Male', '2022-07-01', 'FdIO7gxPN68OeTwuS4hoHlqyynPDJp6T8vbcwr7K.jpg', 'Basic', 'Valid', NULL),
+('ASHCS-P-5', 'Adety Sarkar', 'adetysarkar@gmail.com', 'adety123', 'Female', '2000-06-09', 'UNS9vUcV5cx7rN3XLK2nUM4jRJyeJTRx17nilK9m.jpg', 'Premium', 'Valid', NULL),
+('ASHCS-P-6', 'Jakia Sultana Nupur', 'jakianupur19@gmail.com', 'jakia12', 'Female', '2022-07-19', 'pC3JurlXvkaPSo3tq0jxcfTMbYcOMF9GKKtPKJKH.jpg', 'Premium', 'Valid', NULL);
 
 -- --------------------------------------------------------
 
@@ -631,7 +636,7 @@ CREATE TABLE `remunerations` (
 --
 
 INSERT INTO `remunerations` (`rm_id`, `visit`, `discount_per`, `doctor_id`) VALUES
-('RM-1', '15', 15, 'ASHCS-D-2'),
+('RM-1', '20', 15, 'ASHCS-D-2'),
 ('RM-2', '25', 15, 'ASHCS-D-1'),
 ('RM-3', '35', 50, 'ASHCS-D-3');
 
@@ -724,7 +729,39 @@ INSERT INTO `tokens` (`id`, `user_id`, `token`, `token_for`, `created_at`, `expi
 (8, 'ASHCS-P-1', 'dC3J2IWedKzwVQnKnwn49Y8ZZsuYgsdpDKw8bMePLEhJ2SiCWDq6u0Y3MjKtrw1L', 'Patient', '2022-07-30 13:30:28', '2022-07-30 13:30:39'),
 (9, 'ASHCS-D-2', 'wagj2F4fgyxbFEKTuTTUJeOX1G08iO4PgGYSyTlUQ6uQxdMZrojlVsxtZ8eo0iDJ', 'Doctor', '2022-07-31 03:49:55', '2022-07-31 03:50:07'),
 (10, 'ASHCS-D-2', '9ZxSprJTHHCOX6JnLtGdPKK1V7CUMv8xj1gMUet1JSn8QhFpHGGTzV9JXarRZd6F', 'Doctor', '2022-07-31 03:52:54', '2022-07-31 03:53:04'),
-(11, 'ASHCS-D-4', 'ADtcmgqEXewZcPFPWVVmoUFx96COA2iK6N1aj1Om9786N8Aci61Id8Rq1vZl7wgM', 'Doctor', '2022-07-31 14:49:52', '2022-07-31 14:49:55');
+(11, 'ASHCS-D-4', 'ADtcmgqEXewZcPFPWVVmoUFx96COA2iK6N1aj1Om9786N8Aci61Id8Rq1vZl7wgM', 'Doctor', '2022-07-31 14:49:52', '2022-07-31 14:49:55'),
+(14, 'ASHCS-D-2', 'lvMc2VR6qtMFfQIA69QXHsLPby0EhtQw0ayYTkYmelmMqxdhCxlZj9R5eftSati2', 'Doctor', '2022-08-01 03:24:17', '2022-08-01 03:24:23'),
+(15, 'ASHCS-D-2', 'bsTga7DB9Pxsq4aygvmlVRStpgc0AhtH19wz9QoUrTchxO1Ltn8bRs1qAcDbxY0v', 'Doctor', '2022-08-01 03:50:18', '2022-08-01 03:50:32'),
+(16, 'ASHCS-D-2', 'qubjdYJEJE48i7GsXKSuOLfmOq73ibOjJe4uBMsloaNmK3ckCoRXbOCmjHKk4fTx', 'Doctor', '2022-08-02 13:47:41', '2022-08-02 14:07:46'),
+(17, 'ASHCS-D-2', 'uoDvWQf8Gu7Aeg4ryc7gZvxOmorUagBCrz3WIj1zf1H70KBjAjdyOKU6irkfIwgK', 'Doctor', '2022-08-02 14:08:04', '2022-08-02 14:56:38'),
+(18, 'ASHCS-D-2', 'bYin5b5Wz0Zq4rwI87WyquYdFv5450ast2Fk3T5WeS74cflRKObsMsORUKJBQjEj', 'Doctor', '2022-08-02 14:56:50', '2022-08-02 15:29:27'),
+(19, 'ASHCS-D-2', 'GYzIplRUd0ATdxeiV1YRDv9Ww8suNwYict0GBcG8UHTb3k28jVQv7XRqi5xD0cWn', 'Doctor', '2022-08-02 15:32:50', '2022-08-02 15:34:03'),
+(20, 'ASHCS-D-2', '5RTviMykXUv0H6AuvkMCK1BqedtEJoczqyKZzdYu2HLjMsQ7TsSOPmqQg7izHAwF', 'Doctor', '2022-08-03 02:10:53', '2022-08-03 02:15:25'),
+(21, 'ASHCS-D-2', 'a2zVIKJYIQOzUu2BmcGPcQwCoVlNFbn39HNsfrinXzcq4d9Pn8Mr342x2Wr2KqQM', 'Doctor', '2022-08-03 02:15:36', '2022-08-03 02:16:38'),
+(22, 'ASHCS-D-2', 'c13O5hygBCOIFd8o5cgDWSh8kAbA1ltQeNwjn87uAO8QkI7GIXriGe6sartXYGak', 'Doctor', '2022-08-03 02:26:42', '2022-08-03 03:00:59'),
+(23, 'ASHCS-D-2', 'HFqZr8M2oToYrKxxs77bTT28qRgA5zwYKRicSlHEsguSVlkgtjC3EinEp9cswXdl', 'Doctor', '2022-08-03 03:23:31', '2022-08-03 03:33:40'),
+(24, 'ASHCS-D-2', 'hwCaqfW4aDhXK6gCp83avdDiC0LUBoT2K3cqEG26yCPaaHjQDCQbRFJ1bSYj2nDy', 'Doctor', '2022-08-03 07:09:04', '2022-08-03 09:14:18'),
+(25, 'ASHCS-D-6', 'RaGQlFLqCSUD6trQ2MND0syhgb88op6znddx0CM5LJZ8eRGxpRfTReAdrvZoffqV', 'Doctor', '2022-08-03 09:17:27', '2022-08-03 09:18:07'),
+(26, 'ASHCS-D-6', 'bkbvokpQPdXCJPKa4jz8wMCwjWi3ib3yobTdLWnZb4e7cBjlRkLhhEd0O7Htbya4', 'Doctor', '2022-08-03 09:23:00', '2022-08-03 09:23:21'),
+(27, 'ASHCS-D-2', 'J4lqTYtVQiXjbEZY8i7RuSe76coAN7b6f7Kkln2zFLCzGZcSpROBoZDjmskCEZXE', 'Doctor', '2022-08-03 09:24:17', '2022-08-03 09:24:32'),
+(28, 'ASHCS-D-2', 'mJhuhktqdRrjpwQ0wyuJ0Sew1PZbWr7fYDUabRIwg3kwLi8W8uIXqQXIjq2IN5TE', 'Doctor', '2022-08-03 09:24:41', '2022-08-03 09:29:01'),
+(29, 'ASHCS-D-2', 'atx7xMgcBkjcB2S3pPd15qYUD8MCMelghKrFFxHz5H2gIng1SIPVIB7mRbsTGsFY', 'Doctor', '2022-08-03 09:32:50', '2022-08-03 09:33:27'),
+(30, 'ASHCS-D-2', 'dXsEnv6wIBPrNJGzdEEmNxBJkB3gp0Y2ZHYfP7fViSW0KoiR8aW55QaAJWV0Weyk', 'Doctor', '2022-08-03 09:33:46', '2022-08-03 09:42:07'),
+(31, 'ASHCS-D-2', 'bcKHTflcl1FLH1DC5uuFSu0REAAw9KV7xC1xOstvcuszz1ufwWE4sqWW2SZxOwXc', 'Doctor', '2022-08-03 09:42:37', '2022-08-03 09:43:37'),
+(32, 'ASHCS-D-2', 'gr7DkNrQzDUQ28a9UicyGzMBxN1BQhA2sBMJLFXt81Fdp1bf3bHHMpUWYyCnLgOF', 'Doctor', '2022-08-03 09:44:02', '2022-08-03 09:46:32'),
+(33, 'ASHCS-D-2', '0nrsnJWIe2DS4iZaMMdZvkJ44N4x3uJxi3xPsYv5XnbVw4LfXz7g5WbxHVacNXPi', 'Doctor', '2022-08-03 09:46:53', '2022-08-03 09:47:19'),
+(34, 'ASHCS-D-2', 'wyCfNZAd10tAkLwkm5nIMXEV8ukRSudMt3HxM2JNCY4yptCrNWqznNWSNcb4Ie1b', 'Doctor', '2022-08-03 12:41:42', '2022-08-03 12:42:18'),
+(35, 'ASHCS-D-2', 'olwEcfckrl6FYs9IEzrvIgqfL9rVV2imfmnHLGAEnY4TDOQQKhu2RfngYhqauG8T', 'Doctor', '2022-08-03 12:51:30', '2022-08-03 12:51:48'),
+(36, 'ASHCS-D-2', 'L7iquF2nvKFcMUFhbhYPKbw4ofZ0ff98pEvUQySUR57Qv9OmWG4X8lNhCdHkpFIg', 'Doctor', '2022-08-03 12:53:02', '2022-08-03 12:53:11'),
+(37, 'ASHCS-D-2', 'cj6KPyEipufYkZkBlOvxpvQqO2NiePmbiYxO0i5RuBDwZ6sHPZ3u6eAmXq7pVeKv', 'Doctor', '2022-08-03 12:54:23', '2022-08-03 12:54:30'),
+(38, 'ASHCS-D-2', 'dhcGkgEsQ2HcSGJ94rI8Q6oPycfSCGNJJ2FuJgNn0Wwr9RpqmTEaXMpEsc3CIaKd', 'Doctor', '2022-08-03 12:55:35', '2022-08-03 12:55:52'),
+(39, 'ASHCS-D-2', 'Xvppl6HQrPXicx1cMFJdSPR45oJRK56VyYBrXtusTkScdGY0QyGeexmavO13YqeK', 'Doctor', '2022-08-03 12:58:44', '2022-08-03 12:58:58'),
+(40, 'ASHCS-D-2', 'ZM3myBE4NUt2LRdS77xchNIHj3gBESaBXj4SggJ1EBlETGZZgE1jdASXQorCXR41', 'Doctor', '2022-08-03 13:00:56', '2022-08-03 13:02:53'),
+(41, 'ASHCS-D-2', 's7weT5pODCS0k7EzfHuUb8rJT2MY1Yc08cQpkqxZPXdMJs0bfX1AsmNIUr4eBWWT', 'Doctor', '2022-08-03 13:03:06', '2022-08-03 13:03:31'),
+(42, 'ASHCS-D-2', 'ZJ3DrJqrxUtjLxH8GL86l3Zyx07ztDfdazfGBQyGOSd2jxKmQx4VxVHfpOOEbsgX', 'Doctor', '2022-08-03 13:14:32', '2022-08-03 13:15:01'),
+(43, 'ASHCS-D-2', '8U9UkGkxFxu2hVflNVoDDKkKDeIYyjprbC5OfwGDwUTg859MIU1b2yOqmCOJPId9', 'Doctor', '2022-08-03 13:30:16', '2022-08-03 13:34:35'),
+(44, 'ASHCS-D-2', 'eYjidC6o9q2FEtmGQzdEIJ71SUGGh6CtAcrLUUHGMHPpv0PUe9tbeQx76ACkebNS', 'Doctor', '2022-08-03 13:49:13', '2022-08-03 13:49:19'),
+(45, 'ASHCS-D-2', 'Kv33pSpRhxJkvC9VEig64NYE6F8Pf18RZK0dLyVhsscN2XXMy7ShnqvmzP71VTT0', 'Doctor', '2022-08-03 13:58:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -964,7 +1001,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `o_t_p_s`
 --
 ALTER TABLE `o_t_p_s`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -976,7 +1013,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `tokens`
 --
 ALTER TABLE `tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `users`
