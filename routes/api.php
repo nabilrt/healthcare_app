@@ -8,6 +8,7 @@ use App\Http\Controllers\InboxController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientPaymentController;
 use App\Http\Controllers\RemunerationController;
 use Illuminate\Http\Request;
@@ -49,3 +50,5 @@ Route::get('/doctor/medical/history/{id}',[IssueController::class,'getMedIssuesA
 Route::post('/doctor/profile',[DoctorController::class,'getProfileDetails']);
 Route::post('/doctor/profile/update',[DoctorController::class,'updateProfileDetails']);
 Route::post('/doctor/notices',[NoticeController::class,'getDocNotices']);
+Route::post('/patient/profile',[PatientController::class,'getProfileDetails']);
+Route::post('/patient/profile/update',[PatientController::class,'updateProfileDetails']);

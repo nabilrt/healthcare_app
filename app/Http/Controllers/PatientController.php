@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use App\Models\Patient;
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
+use App\Models\Token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Session;
@@ -175,6 +177,27 @@ class PatientController extends Controller
      * @param  \App\Models\Patient  $patient
      * @return \Illuminate\Http\Response
      */
+    public function getProfileDetails(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        $patient=Patient::where('patient_id',$userActive->user_id)->first();
+
+        return $patient;
+    }
+
+    public function updateProfileDetails(Request $req){
+        $userActive=Token::where('token',$req->token)->first();
+        $patient=Patient::where('patient_id',$userActive->user_id)->first();
+        $patient->patient_name=$req->name;
+        $patient->patient_email=$req->email;
+        $patient->patient_pass=$req->pass;
+        $patient->save();
+
+        return "Saved";
+
+    }
+
+
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
         //
