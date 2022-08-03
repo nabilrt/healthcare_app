@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthenticationAPI;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\InboxController;
+use App\Http\Controllers\PatientPaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +34,7 @@ Route::get('/doctor/convo/{id}',[ConversationController::class,'getMessageAPIDoc
 Route::post('/doctor/convo/reply',[ConversationController::class,'replyMessageAPIDoctor']);
 Route::post('/doctor/convo/message/new',[ConversationController::class,'newMessageAPIDoctor']);
 Route::get('/doctor/appointment/finish/{id}',[InboxController::class,'finishAppointmentAPIDoctor']);
+Route::post('/doctor/appointments',[AppointmentController::class,'getAllAppointments']);
+Route::post('/doctor/appointment/search',[AppointmentController::class,'searchAppointment']);
+Route::post('/doctor/earnings',[PatientPaymentController::class,'earningAPI']);
 

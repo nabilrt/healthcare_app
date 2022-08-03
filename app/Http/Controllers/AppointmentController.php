@@ -11,6 +11,7 @@ use App\Models\Inbox;
 use App\Models\MedicalHistory;
 use App\Models\Comission;
 use App\Models\Issue;
+use App\Models\Token;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAppointmentRequest;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -72,6 +73,28 @@ class AppointmentController extends Controller
         $doctor=Doctor::where('doctor_id',session('username'))->first();
         $appointments=Appointment::where('doctor_id',session('username'))->paginate(5);
         return view('Doctor.appointments')->with('doctor',$doctor)->with('appointments',$appointments);
+    }
+
+    public function getAllAppointments(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        $appointments=Appointment::where('doctor_id',$userActive->user_id)->get();
+
+        return $appointments;
+
+    }
+
+    public function searchAppointment(Request $req){
+        $userActive=Token::where('token',$req->token)->first();
+        $appointments=Appointment::where('doctor_id',$userActive->user_id)->get();
+
+        if($req->s_key!=""){
+
+            return Appointment::where('doctor_id',$userActive->user_id)->whereDate('app_date',$req->s_key)->get();
+
+        }
+
+        return $appointments;
     }
 
     /**

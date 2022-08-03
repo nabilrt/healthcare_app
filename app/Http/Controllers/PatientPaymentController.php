@@ -6,6 +6,8 @@ use App\Models\PatientPayment;
 use App\Models\Doctor;
 use App\Http\Requests\StorePatientPaymentRequest;
 use App\Http\Requests\UpdatePatientPaymentRequest;
+use App\Models\Token;
+use Illuminate\Http\Request;
 
 class PatientPaymentController extends Controller
 {
@@ -21,6 +23,14 @@ class PatientPaymentController extends Controller
         $payments=PatientPayment::where('doctor_id',session('username'))->paginate(5);
         $pay=PatientPayment::where('doctor_id',session('username'))->sum('paid_amount');
         return view('Doctor.earnings')->with('doctor',$doctor)->with('payments',$payments)->with('earned',$pay);
+    }
+
+    public function earningAPI(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        $payments=PatientPayment::where('doctor_id',$userActive->user_id)->get();
+
+        return $payments;
     }
 
     /**
