@@ -11,6 +11,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientPaymentController;
 use App\Http\Controllers\RemunerationController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -60,7 +61,10 @@ Route::post('/patient/notices',[NoticeController::class,'getPatientNotices']);
 Route::post('/patient/doctors/normal',[RemunerationController::class,'normalDoctor']);
 Route::post('/patient/doctors/all',[RemunerationController::class,'allDoctor']);
 Route::post('/patient/status',[RemunerationController::class,'patientStatus']);
-
+Route::post('/patient/review/post',[ReviewController::class,'patientReviewAPI']);
+Route::post('/patient/review/all',[ReviewController::class,'allPatientReview']);
+Route::post('/doctor/review/post',[ReviewController::class,'doctorReviewAPI']);
+Route::post('/doctor/review/all',[ReviewController::class,'allDoctorReview']);
 
 
 

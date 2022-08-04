@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Patient;
 use App\Models\Review;
 use App\Models\Doctor;
+use App\Models\Token;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreReviewRequest;
 use App\Http\Requests\UpdateReviewRequest;
@@ -50,6 +51,48 @@ class ReviewController extends Controller
         $review->save();
 
         return redirect()->route('old_review');
+    }
+
+    public function patientReviewAPI(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        $r=new Review();
+        $r->r_id=$this->generateID();
+        $r->comment=$req->comment;
+        $r->given_by=$userActive->user_id;
+        $r->save();
+
+        return "Saved";
+
+    }
+
+    public function allPatientReview(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+
+         return Review::where('given_by',$userActive->user_id)->get();
+
+    }
+
+    public function allDoctorReview(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+
+        return Review::where('given_by',$userActive->user_id)->get();
+
+    }
+
+    public function doctorReviewAPI(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        $r=new Review();
+        $r->r_id=$this->generateID();
+        $r->comment=$req->comment;
+        $r->given_by=$userActive->user_id;
+        $r->save();
+
+        return "Saved";
+
     }
 
     public function p_create(Request $req){
