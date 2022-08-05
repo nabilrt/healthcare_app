@@ -22,6 +22,47 @@ class ExpenseController extends Controller
         return view('Admin.create_expense')->with('admin',$admin);
     }
 
+    public function addExpenseAPI(Request $req){
+
+        $expense=new Expense();
+        $expense->expense_id=$this->generateID();
+        $expense->amount=$req->amount;
+        $expense->purpose=$req->purpose;
+        $expense->created=date('Y-m-d');
+        $expense->save();
+
+        return "Saved";
+
+    }
+
+    public function fetchExpensesAPI(){
+
+        return Expense::all();
+    }
+
+    public function deleteExpenseAPI(Request $req){
+
+        $exp=Expense::where('expense_id',$req->id)->first();
+        $exp->delete();
+
+        return "Deleted";
+    }
+
+    public function fetchExpense(Request $req){
+
+        return Expense::where('expense_id',$req->id)->first();
+    }
+
+    public function updateExpenseAPI(Request $req){
+
+        $expense=Expense::where('expense_id',$req->id)->first();
+        $expense->purpose=$req->purpose;
+        $expense->amount=$req->amount;
+        $expense->save();
+
+        return "Updated";
+    }
+
     /**
      * Show the form for creating a new resource.
      *

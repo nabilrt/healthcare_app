@@ -49,6 +49,30 @@ class NoticeController extends Controller
         return view('Doctor.notices')->with('doctor',$doctor)->with('notices',$notices);
     }
 
+    public function createNoticeAPI(Request $req){
+
+        $notice=new Notice();
+        $notice->notice_id=$this->generateID();
+        $notice->notice_for=$req->notice_for;
+        $notice->message=$req->message;
+        $notice->save();
+
+        return "Saved";
+    }
+
+    public function fetchNoticesAPI(){
+
+        return Notice::all();
+    }
+
+    public function deleteNoticeAPI(Request $req){
+
+        $notice=Notice::where('notice_id',$req->id)->first();
+        $notice->delete();
+        return "Deleted";
+
+    }
+
     public function sellerNotices(){
 
         $seller=Seller::where('seller_id',session('username'))->first();

@@ -5,6 +5,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthenticationAPI;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\InboxController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\MedicalHistoryController;
@@ -85,6 +86,15 @@ Route::get('/seller/medicine/delete/{id}',[MedicineController::class,'deleteMedi
 Route::get('/seller/medicine/search/{id}',[MedicineController::class,'searchMedicineAPI']);
 Route::post('/admin/profile',[AdminController::class,'getProfileDetails']);
 Route::post('/admin/profile/update',[AdminController::class,'updateProfileDetails']);
+Route::post('/admin/notice/add',[NoticeController::class,'createNoticeAPI']);
+Route::post('/admin/notices',[NoticeController::class,'fetchNoticesAPI']);
+Route::get('/admin/notice/delete/{id}',[NoticeController::class,'deleteNoticeAPI']);
+Route::post('/admin/expense/add',[ExpenseController::class,'addExpenseAPI']);
+Route::post('/admin/expenses',[ExpenseController::class,'fetchExpensesAPI']);
+Route::get('/admin/expense/delete/{id}',[ExpenseController::class,'deleteExpenseAPI']);
+Route::get('/admin/expense/edit/{id}',[ExpenseController::class,'fetchExpense']);
+Route::post('/admin/expense/update',[ExpenseController::class,'updateExpenseAPI']);
+
 
 
 
