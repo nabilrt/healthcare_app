@@ -28,6 +28,27 @@ class OrderController extends Controller
         return view('Seller.manage_orders')->with('orders',$orders)->with('seller',$seller);
     }
 
+    public function getOrdersAPI(){
+
+        return Order::all();
+    }
+
+    public function getOrderStatus(Request $req){
+        $order=Order::where('order_id',$req->id)->first();
+
+        return $order->status;
+    }
+
+    public function updateOrderAPI(Request $req){
+
+        $order=Order::where('order_id',$req->id)->first();
+        $order->status=$req->status;
+        $order->save();
+
+        return "Updated";
+
+    }
+
     public function ind(){
 
         $orders=Order::where('user_id',session('username'))->get();

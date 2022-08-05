@@ -8,6 +8,7 @@ use App\Models\Medicine;
 use App\Models\OrderDetail;
 use App\Http\Requests\StoreSellerRequest;
 use App\Http\Requests\UpdateSellerRequest;
+use App\Models\Token;
 use Illuminate\Http\Request;
 
 class SellerController extends Controller
@@ -20,6 +21,24 @@ class SellerController extends Controller
     public function index()
     {
         //
+
+    }
+
+    public function getProfileDetails(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        return Seller::where('seller_id',$userActive->user_id)->first();
+    }
+
+    public function updateProfileDetails(Request $req){
+        $userActive=Token::where('token',$req->token)->first();
+        $seller=Seller::where('seller_id',$userActive->user_id)->first();
+        $seller->seller_name=$req->name;
+        $seller->seller_email=$req->email;
+        $seller->seller_pass=$req->pass;
+        $seller->save();
+
+        return "Saved";
 
     }
 

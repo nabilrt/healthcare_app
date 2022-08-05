@@ -23,7 +23,7 @@
                   <tr>
                     <td>{{ $o->order_id }}</td>
                     <td>{{ $o->user_id  }}</td>
-                    <td><a href="/oD-{{ $o->order_id }}" class="btn btn-sm btn-info"><i class='bx bx-info-square' ></i></a></td>
+                    <td><a href="/seller/order/details/{{ $o->order_id }}" class="btn btn-sm btn-info"><i class='bx bx-info-square' ></i></a></td>
                     <td>{{ $o->total_price .'$' }}</td>
                     <td>{{ $o->order_date }}</td>
                       <td>{{ $o->status }}</td>

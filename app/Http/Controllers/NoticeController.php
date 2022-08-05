@@ -35,6 +35,11 @@ class NoticeController extends Controller
         return Notice::where('notice_for',"Patient")->get();
 
     }
+    public function getSellerNotices(Request $req){
+
+        return Notice::where('notice_for',"Seller")->get();
+
+    }
 
     public function doctorNotices(){
 

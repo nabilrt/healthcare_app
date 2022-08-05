@@ -7,11 +7,15 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\InboxController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\MedicalHistoryController;
+use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientPaymentController;
 use App\Http\Controllers\RemunerationController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SellerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -65,7 +69,19 @@ Route::post('/patient/review/post',[ReviewController::class,'patientReviewAPI'])
 Route::post('/patient/review/all',[ReviewController::class,'allPatientReview']);
 Route::post('/doctor/review/post',[ReviewController::class,'doctorReviewAPI']);
 Route::post('/doctor/review/all',[ReviewController::class,'allDoctorReview']);
-
+Route::post('/seller/profile',[SellerController::class,'getProfileDetails']);
+Route::post('/seller/profile/update',[SellerController::class,'updateProfileDetails']);
+Route::post('/seller/notices',[NoticeController::class,'getSellerNotices']);
+Route::post('/seller/earnings',[OrderController::class,'getOrdersAPI']);
+Route::get('/seller/order/{id}',[OrderDetailController::class,'getOrderDetailsAPI']);
+Route::get('/seller/order/details/{id}',[OrderController::class,'getOrderStatus']);
+Route::post('/seller/order/update',[OrderController::class,'updateOrderAPI']);
+Route::post('/seller/medicine/add',[MedicineController::class,'addMedicineAPI']);
+Route::post('/seller/medicines/all',[MedicineController::class,'allMedicinesAPI']);
+Route::get('/seller/medicine/details/{id}',[MedicineController::class,'getMedicineQuantity']);
+Route::post('/seller/medicine/update',[MedicineController::class,'updateMedicineQuantity']);
+Route::get('/seller/medicine/delete/{id}',[MedicineController::class,'deleteMedicineAPI']);
+Route::get('/seller/medicine/search/{id}',[MedicineController::class,'searchMedicineAPI']);
 
 
 

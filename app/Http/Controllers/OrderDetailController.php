@@ -26,6 +26,11 @@ class OrderDetailController extends Controller
         return view('Seller.show_order')->with('o_d',$o_d)->with('buyer',$buyer->user_id)->with('total',$total)->with('seller',$seller);
     }
 
+    public function getOrderDetailsAPI(Request $req){
+
+        return OrderDetail::where('order_id',$req->id)->get();
+    }
+
     /**
      * Show the form for creating a new resource.
      *

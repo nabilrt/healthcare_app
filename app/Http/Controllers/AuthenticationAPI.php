@@ -39,8 +39,10 @@ class AuthenticationAPI extends Controller
                 $token->save();
                 return $token;
 
-            }else{
+            }else if($doctor->email_verified!="yes"){
                 return "Not Verified";
+            }else{
+                return "Wrong Info";
             }
         }
         else if($rec[1]=="P"){
@@ -57,9 +59,11 @@ class AuthenticationAPI extends Controller
                 $token->save();
                 return $token;
 
-            }else{
+            }else if($patient->email_verified!="yes"){
 
                 return "Not Verified";
+            }else{
+                return "Wrong Info";
             }
         }
         else if($rec[1]=="MS"){
@@ -75,6 +79,8 @@ class AuthenticationAPI extends Controller
                 $token->save();
                 return $token;
 
+            }else{
+                return "Wrong Info";
             }
         }
         else if($rec[1]=="AD"){
@@ -90,6 +96,8 @@ class AuthenticationAPI extends Controller
                 $token->save();
                 return $token;
 
+            }else{
+                return "Wrong Info";
             }
 
         }

@@ -119,6 +119,50 @@ class MedicineController extends Controller
         return back()->withErrors(['Medicine Added Successfully', 'Cart is Empty!!']);
     }
 
+    public function addMedicineAPI(Request $req){
+
+        $med=new Medicine();
+        $med->medicine_id=$this->generateID();
+        $med->medicine_name=$req->name;
+        $med->medicine_type=$req->type;
+        $med->quantity=$req->quantity;
+        $med->medicine_price=$req->price;
+        $med->save();
+
+        return "Saved";
+
+    }
+
+    public function allMedicinesAPI(){
+
+        return Medicine::all();
+    }
+
+    public function getMedicineQuantity(Request $req){
+
+        $medicine=Medicine::where('medicine_id',$req->id)->first();
+
+        return $medicine->quantity;
+    }
+
+    public function updateMedicineQuantity(Request $req){
+
+            $medicine=Medicine::where('medicine_id',$req->id)->first();
+            $medicine->quantity=$req->quantity;
+            $medicine->save();
+
+            return "Updated";
+
+    }
+
+    public function deleteMedicineAPI(Request $req){
+
+        $medicine=Medicine::where('medicine_id',$req->id)->first();
+        $medicine->delete();
+
+        return "Deleted";
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -157,6 +201,19 @@ class MedicineController extends Controller
 
         return view('Seller.search_medicine')->with('medicines',$medicines)->with('seller',$seller);
 
+
+
+    }
+
+    public function searchMedicineAPI(Request $req){
+
+        if($req->id!=""){
+            return Medicine::where('medicine_name','LIKE','%'.$req->id.'%')->get();
+        }
+
+        if($req->id==""){
+            return Medicine::all();
+        }
 
 
     }
