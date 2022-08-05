@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthenticationAPI;
 use App\Http\Controllers\ConversationController;
@@ -82,6 +83,8 @@ Route::get('/seller/medicine/details/{id}',[MedicineController::class,'getMedici
 Route::post('/seller/medicine/update',[MedicineController::class,'updateMedicineQuantity']);
 Route::get('/seller/medicine/delete/{id}',[MedicineController::class,'deleteMedicineAPI']);
 Route::get('/seller/medicine/search/{id}',[MedicineController::class,'searchMedicineAPI']);
+Route::post('/admin/profile',[AdminController::class,'getProfileDetails']);
+Route::post('/admin/profile/update',[AdminController::class,'updateProfileDetails']);
 
 
 

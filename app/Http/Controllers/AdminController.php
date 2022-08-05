@@ -11,6 +11,7 @@ use App\Models\Comission;
 use App\Models\Expense;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
+use App\Models\Token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -30,6 +31,24 @@ class AdminController extends Controller
         $total_earn=(int)$premium+(int)$com;
         $profit=$total_earn-(int)$expense;
         return view('Admin.dashboard')->with('admin',$admin)->with('expense',$expense)->with('total_earning',$total_earn)->with('profit',$profit);
+
+    }
+
+    public function getProfileDetails(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        return Admin::where('admin_id',$userActive->user_id)->first();
+    }
+
+    public function updateProfileDetails(Request $req){
+        $userActive=Token::where('token',$req->token)->first();
+        $admin=Admin::where('admin_id',$userActive->user_id)->first();
+        $admin->admin_name=$req->name;
+        $admin->admin_email=$req->email;
+        $admin->admin_pass=$req->pass;
+        $admin->save();
+
+        return "Saved";
 
     }
 
