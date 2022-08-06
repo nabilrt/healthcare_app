@@ -31,14 +31,21 @@ class AuthenticationAPI extends Controller
             if($doctor){
 
                 if($doctor->email_verified=="yes"){
-                    $api_token = Str::random(64);
-                    $token = new Token();
-                    $token->user_id = $doctor->doctor_id;
-                    $token->token = $api_token;
-                    $token->token_for="Doctor";
-                    $token->created_at = new DateTime();
-                    $token->save();
-                    return $token;
+                    if($doctor->status=="Valid"){
+                        $api_token = Str::random(64);
+                        $token = new Token();
+                        $token->user_id = $doctor->doctor_id;
+                        $token->token = $api_token;
+                        $token->token_for="Doctor";
+                        $token->created_at = new DateTime();
+                        $token->save();
+                        return $token;
+
+                    }
+                    else if($doctor->status=="Blocked"){
+                        return "Blocked";
+                    }
+
 
                 }else if($doctor->email_verified==NULL){
 
@@ -55,14 +62,19 @@ class AuthenticationAPI extends Controller
             if($patient){
 
                 if($patient->email_verified=="yes"){
-                    $api_token = Str::random(64);
-                    $token = new Token();
-                    $token->user_id = $patient->patient_id;
-                    $token->token = $api_token;
-                    $token->token_for="Patient";
-                    $token->created_at = new DateTime();
-                    $token->save();
-                    return $token;
+                    if($patient->status=="Valid"){
+                        $api_token = Str::random(64);
+                        $token = new Token();
+                        $token->user_id = $patient->patient_id;
+                        $token->token = $api_token;
+                        $token->token_for="Patient";
+                        $token->created_at = new DateTime();
+                        $token->save();
+                        return $token;
+                    }
+                    else if($patient->status=="Blocked"){
+                        return "Blocked";
+                    }
 
                 }else if($patient->email_verified==NULL){
 
