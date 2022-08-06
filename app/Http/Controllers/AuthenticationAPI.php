@@ -28,19 +28,23 @@ class AuthenticationAPI extends Controller
         if($rec[1]=="D"){
 
             $doctor = Doctor::whereRaw("BINARY doctor_id = '$username'")->whereRaw("BINARY doctor_pass = '$password'")->first();
-            if($doctor && $doctor->email_verified=="yes"){
+            if($doctor){
 
-                $api_token = Str::random(64);
-                $token = new Token();
-                $token->user_id = $doctor->doctor_id;
-                $token->token = $api_token;
-                $token->token_for="Doctor";
-                $token->created_at = new DateTime();
-                $token->save();
-                return $token;
+                if($doctor->email_verified=="yes"){
+                    $api_token = Str::random(64);
+                    $token = new Token();
+                    $token->user_id = $doctor->doctor_id;
+                    $token->token = $api_token;
+                    $token->token_for="Doctor";
+                    $token->created_at = new DateTime();
+                    $token->save();
+                    return $token;
 
-            }else if($doctor->email_verified!="yes"){
-                return "Not Verified";
+                }else if($doctor->email_verified==NULL){
+
+                    return "Not Verified";
+                }
+
             }else{
                 return "Wrong Info";
             }
@@ -48,20 +52,23 @@ class AuthenticationAPI extends Controller
         else if($rec[1]=="P"){
 
             $patient=Patient::where('patient_id',$req->username)->where('patient_pass',$password)->first();
-            if($patient && $patient->email_verified=="yes"){
+            if($patient){
 
-                $api_token = Str::random(64);
-                $token = new Token();
-                $token->user_id = $patient->patient_id;
-                $token->token = $api_token;
-                $token->token_for="Patient";
-                $token->created_at = new DateTime();
-                $token->save();
-                return $token;
+                if($patient->email_verified=="yes"){
+                    $api_token = Str::random(64);
+                    $token = new Token();
+                    $token->user_id = $patient->patient_id;
+                    $token->token = $api_token;
+                    $token->token_for="Patient";
+                    $token->created_at = new DateTime();
+                    $token->save();
+                    return $token;
 
-            }else if($patient->email_verified!="yes"){
+                }else if($patient->email_verified==NULL){
 
-                return "Not Verified";
+                    return "Not Verified";
+                }
+
             }else{
                 return "Wrong Info";
             }
