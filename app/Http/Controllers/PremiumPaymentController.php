@@ -7,6 +7,7 @@ use App\Models\PremiumCharge;
 use App\Models\Patient;
 use App\Http\Requests\StorePremiumPaymentRequest;
 use App\Http\Requests\UpdatePremiumPaymentRequest;
+use App\Models\Token;
 use Illuminate\Http\Request;
 
 
@@ -60,6 +61,23 @@ class PremiumPaymentController extends Controller
 
 
         return redirect()->route('member');
+
+    }
+    public function MembershipAPI(Request $req)
+    {
+        $activeUser=Token::where('token',$req->token)->first();
+        $p_p=new PremiumPayment();
+        $p_p->p_id=$this->generateID();
+        $p_p->amount=$req->amount;
+        $p_p->patient_id= $activeUser->user_id;
+        $p_p->method=$req->met;
+        $p_p->paid_at=date('Y-m-d');
+        $p_p->save();
+
+        $patient=Patient::where('patient_id',$activeUser->user_id)->first();
+        $patient->membership_type="Premium";
+        $patient->save();
+        return "save";
 
     }
 
