@@ -44,6 +44,12 @@ class AppointmentController extends Controller
 
 
     }
+    public function docScheduleAPI(Request $req){
+        return
+            Appointment::where('doctor_id',$req->id)->get();
+
+    }
+
 
     /**
      * Show the form for creating a new resource.

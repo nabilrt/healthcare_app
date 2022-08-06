@@ -104,6 +104,8 @@ Route::post('/admin/patients/blocked',[PatientController::class,'blockedPatients
 Route::post('/admin/patient/block/remark',[PatientController::class,'blockPatient']);
 Route::get('/admin/patient/unblock/{id}',[PatientController::class,'unblockPatient']);
 Route::post('/contact/user',[PageController::class,'unblockRequestAPI']);
+Route::get('/patient/doctors/schedule/{id}',[AppointmentController::class,'docScheduleAPI']);
+
 
 
 
