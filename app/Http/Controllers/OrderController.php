@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderCancelled;
 use App\Models\Medicine;
 use App\Models\Order;
 use App\Models\Seller;
@@ -10,6 +11,7 @@ use App\Models\OrderDetail;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Rap2hpoutre\FastExcel\FastExcel;
 use PDF;
 
@@ -40,6 +42,37 @@ class OrderController extends Controller
     }
 
     public function updateOrderAPI(Request $req){
+
+        if($req->status=="Cancelled"){
+
+            $order=Order::where('order_id',$req->id)->first();
+            $order->status=$req->status;
+            $order->save();
+
+            $items=OrderDetail::where('order_id',$req->id)->get();
+
+            $patient=Patient::where('patient_id',$order->user_id)->first();
+
+
+            foreach($items as $item){
+
+                $med=Medicine::where('medicine_id',$item->medicine_id)->first();
+                $med->quantity=$med->quantity+$item->quantity;
+                $med->save();
+            }
+
+            $data=array(
+                'status'=>"Cancelled",
+                'id'=>$req->id,
+                'name'=>$order->user_id
+            );
+
+
+            Mail::to($patient->patient_email)->send(new OrderCancelled($data));
+
+            return "Updated";
+
+        }
 
         $order=Order::where('order_id',$req->id)->first();
         $order->status=$req->status;
