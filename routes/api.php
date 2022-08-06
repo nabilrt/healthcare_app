@@ -94,6 +94,14 @@ Route::post('/admin/expenses',[ExpenseController::class,'fetchExpensesAPI']);
 Route::get('/admin/expense/delete/{id}',[ExpenseController::class,'deleteExpenseAPI']);
 Route::get('/admin/expense/edit/{id}',[ExpenseController::class,'fetchExpense']);
 Route::post('/admin/expense/update',[ExpenseController::class,'updateExpenseAPI']);
+Route::post('/admin/doctors',[DoctorController::class,'allDoctors']);
+Route::post('/admin/doctors/blocked',[DoctorController::class,'blockedDoctors']);
+Route::post('/admin/doctor/block/remark',[DoctorController::class,'blockDoctor']);
+Route::get('/admin/doctor/unblock/{id}',[DoctorController::class,'unblockDoctor']);
+Route::post('/admin/patients',[PatientController::class,'allPatients']);
+Route::post('/admin/patients/blocked',[PatientController::class,'blockedPatients']);
+Route::post('/admin/patient/block/remark',[PatientController::class,'blockPatient']);
+Route::get('/admin/patient/unblock/{id}',[PatientController::class,'unblockPatient']);
 
 
 

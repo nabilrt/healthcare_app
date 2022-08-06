@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RemarkMail;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Http\Requests\StorePatientRequest;
@@ -9,6 +10,7 @@ use App\Http\Requests\UpdatePatientRequest;
 use App\Models\Token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Session;
 use PDF;
 
@@ -196,6 +198,49 @@ class PatientController extends Controller
         return "Saved";
 
     }
+
+    public function allPatients(){
+
+        return Patient::where('status',"Valid")->get();
+
+    }
+
+    public function blockedPatients(){
+
+        return Patient::where('status',"Blocked")->get();
+
+    }
+
+    public function blockPatient(Request $req){
+
+        $patient=Patient::where('patient_id',$req->id)->first();
+
+
+        $patient->status="Blocked";
+        $patient->save();
+
+        $data=array(
+            'name'=>$patient->patient_name,
+            'remark'=>$req->remark
+        );
+
+
+        Mail::to($patient->patient_email)->send(new RemarkMail($data));
+
+        return "Sent";
+
+    }
+
+    public function unblockPatient(Request $req){
+
+        $patient=Patient::where('patient_id',$req->id)->first();
+        $patient->status="Valid";
+        $patient->save();
+
+        return "Done";
+    }
+
+
 
 
     public function update(UpdatePatientRequest $request, Patient $patient)

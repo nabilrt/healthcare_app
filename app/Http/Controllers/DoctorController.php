@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RemarkMail;
 use App\Models\Doctor;
 use App\Models\PatientPayment;
 use App\Models\Appointment;
@@ -149,6 +150,46 @@ class DoctorController extends Controller
         $doctor=Doctor::where('doctor_id',$userActive->user_id)->first();
 
         return $doctor;
+    }
+
+    public function allDoctors(){
+
+        return Doctor::where('status',"Valid")->get();
+    }
+
+    public function blockedDoctors(){
+
+        return Doctor::where('status',"Blocked")->get();
+
+    }
+
+    public function blockDoctor(Request $req){
+
+        $doctor=Doctor::where('doctor_id',$req->id)->first();
+
+        $doctor->status="Blocked";
+        $doctor->save();
+
+        $data=array(
+            'name'=>$doctor->doctor_name,
+            'remark'=>$req->remark
+        );
+
+
+        Mail::to($doctor->doctor_email)->send(new RemarkMail($data));
+
+        return "Sent";
+
+    }
+
+    public function unblockDoctor(Request $req){
+
+        $doctor=Doctor::where('doctor_id',$req->id)->first();
+
+        $doctor->status="Valid";
+        $doctor->save();
+
+        return "Done";
     }
 
     public function updateProfileDetails(Request $req){
