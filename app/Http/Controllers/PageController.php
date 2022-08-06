@@ -264,6 +264,64 @@ class PageController extends Controller
 
     }
 
+    public function unblockRequestAPI(Request $req){
+
+        $id=$req->id;
+
+        $admin_email="nabil_rti@outlook.com";
+
+
+        if(str_contains($id,'-')){
+
+            $rec=explode('-',$id);
+
+        }else{
+
+            $rec="";
+        }
+        if(is_array($rec)){
+
+            if($rec[1]=="D"){
+
+                $doctor=Doctor::where('doctor_id',$id)->first();
+
+
+
+                $data=array(
+                    'name'=>$doctor->doctor_name,
+                    'id'=>$doctor->doctor_id
+                );
+
+
+                Mail::to($admin_email)->send(new UnblockMail($data));
+
+                return "Sent";
+
+            }
+            else if($rec[1]=="P"){
+
+                $patient=Patient::where('patient_id',$id)->first();
+
+                $data=array(
+                    'name'=>$patient->patient_name,
+                    'id'=>$id
+                );
+
+
+                Mail::to($admin_email)->send(new UnblockMail($data));
+
+                return "Sent";
+
+
+            }
+
+        }
+
+
+        return "ID Wrong";
+
+    }
+
     public function logout() {
 
         session()->forget('username');

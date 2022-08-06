@@ -13,6 +13,7 @@ use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientPaymentController;
 use App\Http\Controllers\RemunerationController;
@@ -102,6 +103,7 @@ Route::post('/admin/patients',[PatientController::class,'allPatients']);
 Route::post('/admin/patients/blocked',[PatientController::class,'blockedPatients']);
 Route::post('/admin/patient/block/remark',[PatientController::class,'blockPatient']);
 Route::get('/admin/patient/unblock/{id}',[PatientController::class,'unblockPatient']);
+Route::post('/contact/user',[PageController::class,'unblockRequestAPI']);
 
 
 
