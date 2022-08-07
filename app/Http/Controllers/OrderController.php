@@ -10,6 +10,7 @@ use App\Models\Patient;
 use App\Models\OrderDetail;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -79,6 +80,14 @@ class OrderController extends Controller
         $order->save();
 
         return "Updated";
+
+    }
+
+    public function patientOrdersAPI(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+
+        return Order::where('user_id',$userActive->user_id)->get();
 
     }
 

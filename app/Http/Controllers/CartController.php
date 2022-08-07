@@ -10,6 +10,7 @@ use App\Models\Comission;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
 use App\Models\Patient;
+use App\Models\Token;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -38,6 +39,72 @@ class CartController extends Controller
     public function create()
     {
         //
+    }
+
+    public function addtoCartAPI(Request $req){
+
+        $cart=Cart::where('medicine_id',$req->id)->first();
+        $med=Medicine::where('medicine_id',$req->id)->first();
+
+        $nam=Token::where('token',$req->token)->first();
+        $name=$nam->user_id;
+
+
+
+        if($cart){
+            $m=Medicine::where('medicine_id',$cart->medicine_id)->first();
+            $med_q=$m->quantity;
+            if((int)$cart->item_quantity <= $med_q){
+
+                $q=(int)$cart->item_quantity;
+                $q=$q+1;
+                $cart->item_quantity=str($q);
+                $cart->total_price=str(((int)$med->medicine_price)*$q);
+                $med->quantity=$med->quantity-1;
+                $med->save();
+                $cart->save();
+
+            }else{
+
+                return "Error";
+
+
+            }
+
+        }else{
+            $m=Medicine::where('medicine_id',$req->id)->first();
+            $med_q=$m->quantity;
+            if($med_q!=0){
+
+                $newItem=new Cart();
+                $newItem->medicine_id=$req->id;
+                $newItem->item_name=$med->medicine_name;
+                $newItem->item_quantity="1";
+                $newItem->unit_price=$med->medicine_price;
+                $newItem->total_price=$med->medicine_price;
+                $med->quantity=$med->quantity-1;
+                $newItem->user_id=$name;
+                $med->save();
+                $newItem->save();
+
+            }
+            else{
+
+                return "Error";
+
+
+            }
+
+        }
+
+        return "Added";
+    }
+
+    public function allItemsAPI(Request $req){
+        $userActive=Token::where('token',$req->token)->first();
+
+        return Cart::where('user_id',$userActive->user_id)->get();
+
     }
 
     public function addToCart(Request $req)
@@ -119,6 +186,95 @@ class CartController extends Controller
             return "O-".str($updated_id);
 
         }
+
+
+    }
+
+    public function checkout(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        $items=Cart::where('user_id',$userActive->user_id)->get();
+        $it=Cart::where('user_id',$userActive->user_id)->first();
+        $tot=Cart::where('user_id',$userActive->user_id)->sum('total_price');
+
+        $o_id="O-".rand(20,500);
+
+
+
+
+        if($it){
+
+            $order=new Order();
+            $order->order_id=$o_id;
+            $order->user_id=$userActive->user_id;
+            $order->total_price=((int)$tot-(((int)$tot*5)/100));
+            $order->status="Ordered";
+            $order->order_date=date('Y-m-d');
+            $order->save();
+
+            foreach ($items as $item){
+                $o_d=new OrderDetail();
+                $o_d->order_id=$o_id;
+                $o_d->medicine_id=$item->medicine_id;
+                $o_d->quantity=$item->item_quantity;
+                $o_d->unit_price=$item->unit_price;
+                $o_d->total_price=$item->total_price;
+                $o_d->save();
+            }
+
+            foreach ($items as $item){
+                $med=Medicine::where('medicine_id',$item->medicine_id)->first();
+                $med->quantity=$med->quantity-((int)$item->item_quantity);
+                $med->save();
+            }
+
+            $com=new Comission();
+            $com->commission_id="CM-".rand(20,1000);
+            $com->amount=((int)$tot-(((int)$tot*95)/100));
+            $com->purpose="Medicine Vat";
+            $com->save();
+
+
+
+            $amount=Cart::where('user_id',$userActive->user_id)->sum('total_price');
+
+            $patient=Patient::where('patient_id',$userActive->user_id)->first();
+
+            if($patient->membership_type=="Premium"){
+
+                $discount="10";
+                $after_discount=(int)$amount-((int)$amount*(int)$discount)/100;
+
+              //  $pdf = PDF::loadView('Patient.invoice', compact('items','amount','after_discount','discount','patient'));
+
+                Cart::where('user_id',$userActive->user_id)->delete();
+
+                return "Checkout";
+            }
+
+            $discount="0";
+            $after_discount=(int)$amount-((int)$amount*(int)$discount)/100;
+
+          //  $pdf = PDF::loadView('Patient.invoice', compact('items','amount','after_discount','discount','patient'));
+
+            Cart::where('user_id',$userActive->user_id)->delete();
+
+            return "Checkout";
+
+
+            // return back()->withErrors(['Order Successful!!', 'Cart is Empty!!']);
+
+
+
+
+
+
+        }else if(!$it){
+
+            return "Empty";
+
+        }
+
 
 
     }
@@ -247,6 +403,32 @@ class CartController extends Controller
         Cart::where('user_id',$req->u_id)->delete();
 
         return back()->withErrors(['Items removed successfully', 'Cart is Empty!!']);
+
+
+
+
+    }
+
+    public function emptyCartAPI(Request $req){
+
+        $userActive=Token::where('token',$req->token)->first();
+        $items=Cart::where('user_id',$userActive->user_id)->get();
+
+        if($items){
+            foreach ($items as $item){
+                $med=Medicine::where('medicine_id',$item->medicine_id)->first();
+                $med->quantity=$med->quantity+((int)$item->item_quantity);
+                $med->save();
+            }
+
+            Cart::where('user_id',$userActive->user_id)->delete();
+
+            return "Empty";
+        }
+
+       else if(!$items){
+            return "Already Empty";
+        }
 
 
 

@@ -126,6 +126,134 @@ class AppointmentController extends Controller
 
     }
 
+    public function takeAppointmentAPI(Request $req){
+
+        $app=Appointment::where('doctor_id',$req->id)->where('app_date',$req->appDate)->where('app_time',$req->appTime)->first();
+        $userActive=Token::where('token',$req->token)->first();
+        $remu=Remuneration::where('doctor_id',$req->id)->first();
+        $rem=(int)$remu->visit - (((int)$remu->visit*(int)$remu->discount_per)/100);
+
+        if(empty($app)){
+
+           // $problems=$req->problems;
+
+            $app_id="A-".rand(20,100);
+            $inb_id=$this->generateID_I();
+            $c_id="C-".rand(20,500);
+            $mh_id="MH-".rand(20,500);
+            $pp_id=$this->generateID_PP();
+
+            $patient=Patient::where('patient_id',$userActive->user_id)->first();
+
+
+            if($patient->membership_type=='Premium'){
+
+                $appointment=new Appointment();
+                $appointment->appointment_id=$app_id;
+                $appointment->doctor_id=$req->id;
+                $appointment->patient_id=$userActive->user_id;
+                $appointment->app_date=$req->appDate;
+                $appointment->app_time=$req->appTime;
+                $appointment->save();
+
+                $com=new Comission();
+                $com->commission_id=$c_id;
+                $com->amount=str((int)$rem - (((int)$rem*95)/100));
+                $com->purpose="Appointment Charge";
+                $com->save();
+
+                $inbox=new Inbox();
+                $inbox->inbox_id=$inb_id;
+                $inbox->appointment_id=$app_id;
+                $inbox->doctor_id=$req->id;
+                $inbox->patient_id=$userActive->user_id;
+                $inbox->save();
+
+                $mh=new MedicalHistory();
+                $mh->his_id=$mh_id;
+                $mh->doctor_id=$req->id;
+                $mh->patient_id=$userActive->user_id;
+                $mh->appointment_id=$app_id;
+                $mh->save();
+
+                $pp=new PatientPayment();
+                $pp->payment_id=$pp_id;
+                $pp->paid_amount=(int)$rem - (((int)$rem*5)/100);
+                $pp->doctor_id=$req->id;
+                $pp->patient_id=$userActive->user_id;
+                $pp->appointment_id=$app_id;
+                $pp->save();
+
+
+
+                    $issue=new Issue();
+                    $issue->his_id=$mh_id;
+                    $issue->problems=$req->issue;
+                    $issue->save();
+
+
+
+                return "Done";
+
+            }else{
+
+                $appointment=new Appointment();
+                $appointment->appointment_id=$app_id;
+                $appointment->doctor_id=$req->id;
+                $appointment->patient_id=$userActive->user_id;
+                $appointment->app_date=$req->appDate;
+                $appointment->app_time=$req->appTime;
+                $appointment->save();
+
+                $com=new Comission();
+                $com->commission_id="CM-".rand(20,1000);
+                $com->amount=str((int)$rem - (((int)$rem*95)/100));
+                $com->purpose="Appointment Charge";
+                $com->save();
+
+                $inbox=new Inbox();
+                $inbox->inbox_id=$inb_id;
+                $inbox->appointment_id=$app_id;
+                $inbox->doctor_id=$req->id;
+                $inbox->patient_id=$userActive->user_id;
+                $inbox->save();
+
+                $mh=new MedicalHistory();
+                $mh->his_id=$mh_id;
+                $mh->doctor_id=$req->id;
+                $mh->patient_id=$userActive->user_id;
+                $mh->appointment_id=$app_id;
+                $mh->save();
+
+                $pp=new PatientPayment();
+                $pp->payment_id=$pp_id;
+                $pp->paid_amount=(int)$rem - (((int)$rem*5)/100);
+                $pp->doctor_id=$req->id;
+                $pp->patient_id=$userActive->user_id;
+                $pp->appointment_id=$app_id;
+                $pp->save();
+
+
+
+                    $issue=new Issue();
+                    $issue->his_id=$mh_id;
+                    $issue->problems=$req->issue;
+                    $issue->save();
+
+
+
+                return "Done";
+
+
+            }
+
+        }else{
+
+            return "Error";
+        }
+
+    }
+
     public function bookAppointment(Request $req){
 
         $req->validate([

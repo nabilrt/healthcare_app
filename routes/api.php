@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthenticationAPI;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ExpenseController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientPaymentController;
+use App\Http\Controllers\PremiumPaymentController;
 use App\Http\Controllers\RemunerationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SellerController;
@@ -106,7 +108,12 @@ Route::get('/admin/patient/unblock/{id}',[PatientController::class,'unblockPatie
 Route::post('/contact/user',[PageController::class,'unblockRequestAPI']);
 Route::get('/patient/doctors/schedule/{id}',[AppointmentController::class,'docScheduleAPI']);
 Route::post('/patient/membership/pay',[PremiumPaymentController::class,'MembershipAPI']);
-
+Route::post('/patient/appointment/take',[AppointmentController::class,'takeAppointmentAPI']);
+Route::post('/patient/medicine/add',[CartController::class,'addToCartAPI']);
+Route::post('/patient/cart/all',[CartController::class,'allItemsAPI']);
+Route::post('/patient/cart/checkout',[CartController::class,'checkout']);
+Route::post('/patient/cart/empty',[CartController::class,'emptyCartAPI']);
+Route::post('/patient/orders',[OrderController::class,'patientOrdersAPI']);
 
 
 
