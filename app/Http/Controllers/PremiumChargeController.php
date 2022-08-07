@@ -26,7 +26,7 @@ class PremiumChargeController extends Controller
 
     public function getCharge(){
 
-        return PremiumCharge::all();
+        return PremiumCharge::first();
     }
 
     public function update_c(Request $req)
