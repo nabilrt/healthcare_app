@@ -24,6 +24,11 @@ class PremiumChargeController extends Controller
 
     }
 
+    public function getCharge(){
+
+        return PremiumCharge::all();
+    }
+
     public function update_c(Request $req)
     {
         $req->validate([

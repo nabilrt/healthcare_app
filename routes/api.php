@@ -17,6 +17,7 @@ use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientPaymentController;
+use App\Http\Controllers\PremiumChargeController;
 use App\Http\Controllers\PremiumPaymentController;
 use App\Http\Controllers\RemunerationController;
 use App\Http\Controllers\ReviewController;
@@ -114,6 +115,7 @@ Route::post('/patient/cart/all',[CartController::class,'allItemsAPI'])->middlewa
 Route::post('/patient/cart/checkout',[CartController::class,'checkout'])->middleware("APIAuthentication");
 Route::post('/patient/cart/empty',[CartController::class,'emptyCartAPI'])->middleware("APIAuthentication");
 Route::post('/patient/orders',[OrderController::class,'patientOrdersAPI'])->middleware("APIAuthentication");
+Route::post('/patient/charge',[PremiumChargeController::class,'getCharge']);
 
 
 
