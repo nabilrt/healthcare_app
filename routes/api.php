@@ -63,7 +63,7 @@ Route::post('/doctor/profile/update',[DoctorController::class,'updateProfileDeta
 Route::post('/doctor/notices',[NoticeController::class,'getDocNotices'])->middleware("APIAuthentication");
 Route::post('/patient/profile',[PatientController::class,'getProfileDetails'])->middleware("APIAuthentication");
 Route::post('/patient/profile/update',[PatientController::class,'updateProfileDetails'])->middleware("APIAuthentication");
-Route::post('/patient/inbox',[InboxController::class,'apiInboxFetchPatient'])->middleware("APIAuthentication");
+Route::post('/patient/inbox',[InboxController::class,'apiInboxFetchPatient']);
 Route::get('/patient/convo/{id}',[ConversationController::class,'getMessageAPIPatient'])->middleware("APIAuthentication");
 Route::post('/patient/convo/reply',[ConversationController::class,'replyMessageAPIPatient'])->middleware("APIAuthentication");
 Route::post('/patient/convo/message/new',[ConversationController::class,'newMessageAPIPatient'])->middleware("APIAuthentication");

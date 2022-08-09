@@ -97,7 +97,14 @@ class ConversationController extends Controller
      }
     public function getMessageAPIPatient(Request $req){
 
-        return Conversation::where('inbox_id',$req->id)->get();
+        $conv=Conversation::where('inbox_id',$req->id)->get();
+        $c=Conversation::where('inbox_id',$req->id)->first();
+        $doctor=Doctor::where('doctor_id',$c->doctor_id)->first();
+
+        $data['conv']=$conv;
+        $data['name']=$doctor->doctor_name;
+
+        return $data;
 
     }
 
