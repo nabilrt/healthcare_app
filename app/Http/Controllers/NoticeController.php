@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendNotice;
+use App\Mail\UserVerification;
 use App\Models\Notice;
 use App\Models\Admin;
 use App\Models\Doctor;
@@ -10,6 +12,7 @@ use App\Models\Seller;
 use App\Http\Requests\StoreNoticeRequest;
 use App\Http\Requests\UpdateNoticeRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class NoticeController extends Controller
 {
@@ -56,6 +59,55 @@ class NoticeController extends Controller
         $notice->notice_for=$req->notice_for;
         $notice->message=$req->message;
         $notice->save();
+
+        if($req->notice_for=="Doctor"){
+
+            $doctors=Doctor::all();
+
+            $data=array(
+                'for'=>'Doctors',
+                'notice'=>$req->message
+            );
+
+            foreach ($doctors as $doctor){
+
+                Mail::to($doctor->doctor_email)->send(new SendNotice($data));
+
+            }
+
+        }
+        else if($req->notice_for=="Patient"){
+
+            $patients=Patient::all();
+
+            $data=array(
+                'for'=>'Patients',
+                'notice'=>$req->message
+            );
+
+            foreach ($patients as $patient){
+
+                Mail::to($patient->patient_email)->send(new SendNotice($data));
+
+            }
+
+        }
+        else if($req->notice_for=="Seller"){
+
+            $sellers=Seller::all();
+
+            $data=array(
+                'for'=>'Seller',
+                'notice'=>$req->message
+            );
+
+            foreach ($sellers as $seller){
+
+                Mail::to($seller->seller_email)->send(new SendNotice($data));
+
+            }
+
+        }
 
         return "Saved";
     }
